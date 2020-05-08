@@ -32,6 +32,10 @@ class ViewController: UIViewController {
         progressBar.back()
     }
     
+    @IBAction func paused(_ sender: UILongPressGestureRecognizer) {
+        progressBar.isPaused = !progressBar.isPaused
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
