@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.backgroundColor = UIColor.cyan
         
         progressBar = ProgressBar(countSegments: 5)
         progressBar.frame = CGRect(x: 15, y: 30, width: view.frame.width - 30, height: 6)

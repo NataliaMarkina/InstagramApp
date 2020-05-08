@@ -36,6 +36,10 @@
                                     <outletCollection property="gestureRecognizers" destination="Lhz-0r-t5E" appends="YES" id="nD4-3Q-1RL"/>
                                 </connections>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zra-El-UlW">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.38890884110000001" green="0.86856211500000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -43,10 +47,14 @@
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1AI-vk-2vS"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5IZ-r3-Epq"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="leading" secondItem="Z1a-ck-Ch7" secondAttribute="trailing" id="7MN-Wk-c5m"/>
+                            <constraint firstItem="Zra-El-UlW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Pch-2p-tOa"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="a1I-zQ-guM"/>
+                            <constraint firstItem="Zra-El-UlW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="a26-8O-0U4"/>
+                            <constraint firstItem="Zra-El-UlW" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="elp-Or-aWQ"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iFp-g2-Z0H"/>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="jcu-fb-ZXf"/>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wKL-Zp-Hbc"/>
+                            <constraint firstItem="Zra-El-UlW" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="wYf-eP-KDC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
