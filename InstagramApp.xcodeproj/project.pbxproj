@@ -15,6 +15,7 @@
 		E168526F2465420F00D4BAD8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E168526D2465420F00D4BAD8 /* LaunchScreen.storyboard */; };
 		E168527A2465420F00D4BAD8 /* InstagramAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852792465420F00D4BAD8 /* InstagramAppTests.swift */; };
 		E16852852465420F00D4BAD8 /* InstagramAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */; };
+		E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852922465424E00D4BAD8 /* ProgressBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E16852802465420F00D4BAD8 /* InstagramAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstagramAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAppUITests.swift; sourceTree = "<group>"; };
 		E16852862465420F00D4BAD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E16852922465424E00D4BAD8 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				E168526D2465420F00D4BAD8 /* LaunchScreen.storyboard */,
 				E16852702465420F00D4BAD8 /* Info.plist */,
 				E16852682465420F00D4BAD8 /* InstagramApp.xcdatamodeld */,
+				E16852922465424E00D4BAD8 /* ProgressBar.swift */,
 			);
 			path = InstagramApp;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 			files = (
 				E168526A2465420F00D4BAD8 /* InstagramApp.xcdatamodeld in Sources */,
 				E16852642465420F00D4BAD8 /* ViewController.swift in Sources */,
+				E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */,
 				E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,9 +10,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    private var progressBar: ProgressBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = UIColor.cyan
+        
+        progressBar = ProgressBar(countSegments: 5)
+        progressBar.frame = CGRect(x: 15, y: 30, width: view.frame.width - 30, height: 6)
+        
+        view.addSubview(progressBar)
+        
+        progressBar.animation()
     }
 
     override func didReceiveMemoryWarning() {
