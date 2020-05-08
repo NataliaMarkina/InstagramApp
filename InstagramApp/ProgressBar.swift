@@ -13,7 +13,8 @@ class ProgressBar: UIView {
     private var segments = [Segment]()
     private var duration: TimeInterval = 5.0
     private var currentIndex = 0
-    var padding: CGFloat = 3.0
+    private var widthSegment: CGFloat = 0.0
+    private var padding: CGFloat = 3.0
     
     var bottomViewColor = UIColor.gray.withAlphaComponent(0.25) {
         didSet {
@@ -27,7 +28,7 @@ class ProgressBar: UIView {
         }
     }
     
-    var isPaused: Bool = false {
+    /*var isPaused: Bool = false {
         didSet {
             if isPaused {
                 for segment in segments {
@@ -47,7 +48,7 @@ class ProgressBar: UIView {
                 layer.beginTime = timeSincePause
             }
         }
-    }
+    }*/
     
     init(countSegments: Int) {
         super.init(frame: .zero)
@@ -77,40 +78,60 @@ class ProgressBar: UIView {
         super.layoutSubviews()
         
         let width = (frame.width - (CGFloat(segments.count - 1) * padding)) / CGFloat(segments.count)
+        self.widthSegment = width
         
         for (index, segment) in segments.enumerated() {
             let newFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
             segment.bottomView.frame = newFrame
-            segment.topView.frame = newFrame
-            segment.topView.frame.size.width = 0
+            segment.bottomView.layer.cornerRadius = 3
         }
     }
     
     func getNextIndex() {
         let newIndex = self.currentIndex + 1
         if newIndex < segments.count {
-            self.animate(index: newIndex)
+            self.currentIndex = newIndex
+            self.animate()
         }
     }
     
-    func animate(index: Int = 0) {
-        let currentSegment = segments[index]
-        currentSegment.topView.frame.size.width = 0
-        self.currentIndex = index
-        self.isPaused = false
+    func animate() {
+        let newFrame = CGRect(x: (self.widthSegment + padding) * CGFloat(currentIndex), y: 0, width: 0, height: 6)
+        let currentSegment = segments[currentIndex]
+        currentSegment.topView.frame = newFrame
+        currentSegment.topView.layer.cornerRadius = 3
+        
         UIView.animate(withDuration: 5.0, delay: 0, options: .curveLinear, animations: {
             currentSegment.topView.frame.size.width = currentSegment.bottomView.frame.width
         }) { (finished) in
-            if !finished {
-                return
+            if finished {
+                self.getNextIndex()
             }
-            self.getNextIndex()
         }
     }
     
     func animation() {
         layoutSubviews()
         animate()
+    }
+    
+    func skip() {
+        let currentSegment = segments[currentIndex]
+        currentSegment.topView.frame.size.width = currentSegment.bottomView.frame.width
+        currentSegment.topView.layer.removeAllAnimations()
+        self.getNextIndex()
+    }
+    
+    func back() {
+        let currentSegment = segments[currentIndex]
+        currentSegment.topView.frame.size.width = 0
+        currentSegment.topView.layer.removeAllAnimations()
+        
+        self.currentIndex = currentIndex-1 < 0 ? 0 : currentIndex-1
+        let prevSegment = segments[currentIndex]
+        prevSegment.topView.frame.size.width = 0
+        self.animate()
+        
     }
 }
 

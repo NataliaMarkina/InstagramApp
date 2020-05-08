@@ -25,6 +25,14 @@ class ViewController: UIViewController {
         progressBar.animation()
     }
 
+    @IBAction func skip(_ sender: UITapGestureRecognizer) {
+        progressBar.skip()
+    }
+    
+    @IBAction func back(_ sender: UITapGestureRecognizer) {
+        progressBar.back()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
