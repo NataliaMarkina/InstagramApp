@@ -16,14 +16,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
     @IBOutlet weak var imageView: UIImageView!
     private var progressBar: ProgressBar!
-    var pickerController: UIImagePickerController!
+    var pickerController = UIImagePickerController()
     var imageArr = [UIImage]()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        pickerController = UIImagePickerController()
         pickerController.delegate = self
         
         imageView.contentMode = .scaleAspectFit
@@ -66,10 +65,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        imageArr.append(chosenImage)
-        progressBar.addNewImage()
-        progressBar.animation()
+        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageArr.append(chosenImage)
+            progressBar.addNewImage()
+            progressBar.animation()
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

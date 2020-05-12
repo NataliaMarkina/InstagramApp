@@ -126,13 +126,6 @@ class ProgressBar: UIView {
         self.deligate?.changedIndex(index: currentIndex)
     }
     
-    func deleteSegments() {
-        for segment in segments {
-            segment.topView.frame.size.width = 0
-            segment.bottomView.frame.size.width = 0
-        }
-    }
-    
     func addNewImage() {
         let segment = Segment()
         addSubview(segment.bottomView)
@@ -140,9 +133,6 @@ class ProgressBar: UIView {
         segment.bottomView.backgroundColor = UIColor.gray.withAlphaComponent(0.25)
         segment.topView.backgroundColor = UIColor.blue
         segments.append(segment)
-        
-        deleteSegments()
-        animation()
     }
 }
 
