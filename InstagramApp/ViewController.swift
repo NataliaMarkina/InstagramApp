@@ -8,20 +8,44 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
-    private var progressBar: ProgressBar!
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDeligate {
+    func changedIndex(index: Int) {
+        showImage(index: index)
+    }
     
+
+    @IBOutlet weak var imageView: UIImageView!
+    private var progressBar: ProgressBar!
+    var pickerController: UIImagePickerController!
+    var imageArr = [UIImage]()
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        progressBar = ProgressBar(countSegments: 5)
-        progressBar.frame = CGRect(x: 15, y: 30, width: view.frame.width - 30, height: 6)
+        pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        
+        imageView.contentMode = .scaleAspectFit
+        
+        imageArr.append(#imageLiteral(resourceName: "img1"))
+        imageArr.append(#imageLiteral(resourceName: "img2"))
+        imageArr.append(#imageLiteral(resourceName: "img3"))
+        imageArr.append(#imageLiteral(resourceName: "img4"))
+        
+        showImage(index: 0)
+    
+        progressBar = ProgressBar(countSegments: imageArr.count)
+        progressBar.deligate = self
+        progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
         
         view.addSubview(progressBar)
         
         progressBar.animation()
+    }
+    
+    func showImage(index: Int) {
+        imageView.image = imageArr[index]
     }
 
     @IBAction func skip(_ sender: UITapGestureRecognizer) {
@@ -40,7 +64,23 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imageArr.append(chosenImage)
+        progressBar.addNewImage()
+        progressBar.animation()
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func add(_ sender: UIButton) {
+        pickerController.allowsEditing = false
+        pickerController.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+        pickerController.sourceType = .photoLibrary
+        present(pickerController, animated: true, completion: nil)
+    }
 }
 

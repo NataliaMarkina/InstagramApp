@@ -9,7 +9,12 @@
 import Foundation
 import UIKit
 
+protocol ProgressBarDeligate {
+    func changedIndex(index: Int)
+}
+
 class ProgressBar: UIView {
+    var deligate: ProgressBarDeligate?
     private var segments = [Segment]()
     private var duration: TimeInterval = 5.0
     private var currentIndex = 0
@@ -41,7 +46,8 @@ class ProgressBar: UIView {
     init(countSegments: Int) {
         super.init(frame: .zero)
         
-        for _ in 0...countSegments-1 {
+        
+        for _ in 0..<countSegments {
             let segment = Segment()
             addSubview(segment.bottomView)
             addSubview(segment.topView)
@@ -76,6 +82,7 @@ class ProgressBar: UIView {
         if newIndex < segments.count {
             currentIndex = newIndex
             animate()
+            self.deligate?.changedIndex(index: newIndex)
         }
     }
     
@@ -116,6 +123,26 @@ class ProgressBar: UIView {
         let prevSegment = segments[currentIndex]
         prevSegment.topView.frame.size.width = 0
         animate()
+        self.deligate?.changedIndex(index: currentIndex)
+    }
+    
+    func deleteSegments() {
+        for segment in segments {
+            segment.topView.frame.size.width = 0
+            segment.bottomView.frame.size.width = 0
+        }
+    }
+    
+    func addNewImage() {
+        let segment = Segment()
+        addSubview(segment.bottomView)
+        addSubview(segment.topView)
+        segment.bottomView.backgroundColor = UIColor.gray.withAlphaComponent(0.25)
+        segment.topView.backgroundColor = UIColor.blue
+        segments.append(segment)
+        
+        deleteSegments()
+        animation()
     }
 }
 

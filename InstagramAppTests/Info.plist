@@ -18,5 +18,9 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Хотите предоставить доступ к фотокамере?</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Хотите предоставить доступ к галерее?</string>
 </dict>
 </plist>
