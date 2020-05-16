@@ -32,6 +32,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageArr.append(#imageLiteral(resourceName: "img3"))
         imageArr.append(#imageLiteral(resourceName: "img4"))
         
+        let img = textToImage(text: "Hello World!", image: UIImage(named:"img4.jpg")!, point: CGPoint(x: 0, y: 0))
+        
+        imageArr.append(img)
+        
         showImage(index: 0)
     
         progressBar = ProgressBar(countSegments: imageArr.count)
@@ -59,6 +63,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         progressBar.isPaused = !progressBar.isPaused
     }
     
+    func textToImage(text: NSString, image: UIImage, point: CGPoint) -> UIImage{
+        let textColor = UIColor.white
+        let textFont = UIFont(name: "Helvetica Bold", size: 80)!
+        let paragrapheStyle = NSMutableParagraphStyle()
+        paragrapheStyle.alignment = .center
+        
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
+        
+        let attributes = [
+            NSAttributedStringKey.font: textFont,
+            NSAttributedStringKey.foregroundColor: textColor,
+            NSAttributedStringKey.paragraphStyle: paragrapheStyle
+        ] as [NSAttributedStringKey : Any]
+        
+        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        
+        let rect = CGRect(x: point.x, y: point.y, width: image.size.width, height: image.size.height)
+        
+        text.draw(in: rect, withAttributes: attributes)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -68,7 +100,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageArr.append(chosenImage)
             progressBar.addNewImage()
-            progressBar.animation()
         }
         dismiss(animated: true, completion: nil)
     }
