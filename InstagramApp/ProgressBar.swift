@@ -74,6 +74,11 @@ class ProgressBar: UIView {
             let newFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
             segment.bottomView.frame = newFrame
             segment.bottomView.layer.cornerRadius = 5
+            
+            if index < currentIndex {
+                let newTopFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
+                segment.topView.frame = newTopFrame
+            }
         }
     }
     
@@ -133,22 +138,6 @@ class ProgressBar: UIView {
         }
     }
     
-    func createSegments() {
-        let width = (frame.width - (CGFloat(segments.count - 1) * padding)) / CGFloat(segments.count)
-        widthSegment = width
-        
-        for (index, segment) in segments.enumerated() {
-            let newFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
-            segment.bottomView.frame = newFrame
-            segment.bottomView.layer.cornerRadius = 5
-            
-            if index <= currentIndex {
-                let newTopFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
-                segment.topView.frame = newTopFrame
-            }
-        }
-    }
-    
     func addNewImage() {
         let segment = Segment()
         addSubview(segment.bottomView)
@@ -157,22 +146,11 @@ class ProgressBar: UIView {
         segment.topView.backgroundColor = UIColor.blue
         segments.append(segment)
         
+        currentIndex = currentIndex == 0 ? 0 : currentIndex - 1
+        
         deleteSegments()
         
-        for index in 0..<currentIndex {
-            let segment = segments[index]
-            let width = (frame.width - (CGFloat(segments.count - 1) * padding)) / CGFloat(segments.count)
-            let newTopFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
-            segment.topView.frame = newTopFrame
-        }
-        
-        UIView.animate(withDuration: 5.0, delay: 0, options: .curveLinear, animations: {
-            self.segments[self.currentIndex].topView.frame.size.width = self.segments[self.currentIndex].bottomView.frame.width
-        }) { (finished) in
-            if finished {
-                self.getNextIndex()
-            }
-        }
+        animate()
     }
 }
 

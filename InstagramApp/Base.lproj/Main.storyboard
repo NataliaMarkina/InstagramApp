@@ -19,7 +19,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6oa-bj-2JG">
                                 <rect key="frame" x="125" y="0.0" width="250" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="i77-Ey-2Re"/>
@@ -30,7 +29,6 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z1a-ck-Ch7">
                                 <rect key="frame" x="0.0" y="0.0" width="125" height="667"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="Lhz-0r-t5E" appends="YES" id="nD4-3Q-1RL"/>
@@ -47,6 +45,7 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1AI-vk-2vS"/>
@@ -59,8 +58,8 @@
                             <constraint firstItem="8ex-cd-RFD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SVE-kH-Ddi"/>
                             <constraint firstItem="8ex-cd-RFD" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="XHD-MO-4MT"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="a1I-zQ-guM"/>
-                            <constraint firstItem="6oa-bj-2JG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="iFp-g2-Z0H"/>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="jcu-fb-ZXf"/>
+                            <constraint firstItem="6oa-bj-2JG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="qjA-mW-xCT"/>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wKL-Zp-Hbc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
