@@ -36,6 +36,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         imageArr.append(img)
         
+        let img1 = createButton(type: .custom, image: UIImage(named:"img4.jpg")!, point: CGPoint(x: 500, y: 600), text: "Button")
+        
+        imageArr.append(img1)
+        
         showImage(index: 0)
     
         progressBar = ProgressBar(countSegments: imageArr.count)
@@ -88,7 +92,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+    
+    func createButton(type: UIButtonType, image: UIImage, point: CGPoint, text: String? = nil, sizeText: CGFloat = 50, width: CGFloat = 300, height: CGFloat = 100, radius: CGFloat = 6, background: UIColor = UIColor.white, color: UIColor = UIColor.black) -> UIImage {
+        let newView = UIView(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
         
+        let newImageView = UIImageView(image: image)
+        
+        newView.addSubview(newImageView)
+        
+        let button = UIButton(type: type)
+        button.frame = CGRect(x: point.x, y: point.y, width: width, height: height)
+        button.backgroundColor = background
+        button.setTitle(text, for: .normal)
+        button.setTitleColor(color, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Helvetica Bold", size: sizeText)!
+        button.titleLabel?.textAlignment = .center
+        button.layer.cornerRadius = radius
+        
+        newView.addSubview(button)
+        
+        return newView.asImage()
     }
     
     override func didReceiveMemoryWarning() {
@@ -113,6 +137,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         pickerController.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         pickerController.sourceType = .photoLibrary
         present(pickerController, animated: true, completion: nil)
+    }
+}
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
     }
 }
 
