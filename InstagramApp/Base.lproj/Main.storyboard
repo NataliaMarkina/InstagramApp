@@ -37,22 +37,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8ex-cd-RFD">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahA-X7-MUc">
-                                <rect key="frame" x="345" y="20" width="30" height="30"/>
-                                <state key="normal" title="➕"/>
-                                <connections>
-                                    <action selector="add:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xVu-a9-wNb"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="Z1a-ck-Ch7" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1AI-vk-2vS"/>
                             <constraint firstItem="8ex-cd-RFD" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4Dv-Ct-hz8"/>
-                            <constraint firstItem="ahA-X7-MUc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4Zn-rC-x8K"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5IZ-r3-Epq"/>
-                            <constraint firstItem="ahA-X7-MUc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="617-gA-kxI"/>
                             <constraint firstItem="6oa-bj-2JG" firstAttribute="leading" secondItem="Z1a-ck-Ch7" secondAttribute="trailing" id="7MN-Wk-c5m"/>
                             <constraint firstItem="8ex-cd-RFD" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="QnK-F9-o1d"/>
                             <constraint firstItem="8ex-cd-RFD" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="SVE-kH-Ddi"/>

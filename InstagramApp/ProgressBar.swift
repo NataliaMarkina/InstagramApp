@@ -16,7 +16,7 @@ protocol ProgressBarDeligate {
 class ProgressBar: UIView {
     var deligate: ProgressBarDeligate?
     private var segments = [Segment]()
-    private var duration: TimeInterval = 5.0
+    private var duration: TimeInterval!
     private var currentIndex = 0
     private var widthSegment: CGFloat = 0.0
     private var padding: CGFloat = 3.0
@@ -43,9 +43,10 @@ class ProgressBar: UIView {
         }
     }
     
-    init(countSegments: Int) {
+    init(countSegments: Int, duration: TimeInterval) {
         super.init(frame: .zero)
         
+        self.duration = duration
         
         for _ in 0..<countSegments {
             let segment = Segment()
@@ -157,4 +158,7 @@ class ProgressBar: UIView {
 class Segment: UIView {
     let bottomView = UIView()
     let topView = UIView()
+}
+
+extension UIView {
 }
