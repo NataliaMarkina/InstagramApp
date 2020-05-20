@@ -52,11 +52,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         imageView.contentMode = .scaleAspectFill
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img1", theme: "", duration: 5.0, alignmentButton: "center", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img1", theme: "", duration: 5.0, color: "white", alignmentButton: "center", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img2", theme: "", duration: 10.0, alignmentButton: "left", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img2", theme: "", duration: 10.0, color: "white", alignmentButton: "left", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img3", theme: "", duration: 1.0, alignmentButton: "right", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img3", theme: "", duration: 1.0, color: "white", alignmentButton: "right", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
         builder(snap: snapArray[1], button: buttonArray[1])
     
@@ -77,6 +77,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     image: NSString?,
                     theme: NSString,
                     duration: TimeInterval,
+                    color: NSString,
                     alignmentButton: NSString,
                     colorButton: NSString,
                     backgroundButton: NSString,
@@ -84,7 +85,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     action: NSString,
                     sizeTextButton: NSInteger) {
         let button = ButtonModel(alignment: alignmentButton, color: colorButton, background: backgroundButton, text: textButton, action: action, sizeText: sizeTextButton)
-        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button)
+        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button, color: color)
         
         buttonArray.append(button)
         snapArray.append(snap)
@@ -92,6 +93,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func showSnap(index: Int) {
+        //deleteAllSubviews()
         //builder(snap: snapArray[index], button: buttonArray[index])
     }
 
@@ -239,15 +241,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
         if let text = button.text {
-            createButton(type: .custom, text: text, sizeText: button.sizeText, alignment: button.alignment, background: UIColor.red, color: UIColor.black)
+            createButton(type: .custom, text: text, sizeText: button.sizeText, alignment: button.alignment, background: UIColor(named: button.background as String)!, color: UIColor(named: button.color as String)!)
         }
         
         if let subtext = snap.subtext {
-            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext, alignment: snap.alignment, color: UIColor.white)
+            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext, alignment: snap.alignment, color: UIColor(named: snap.color as String)!)
         }
         
         if let text = snap.text {
-            createLabelText(text: text, sizeText: snap.sizeText, alignment: snap.alignment, color: UIColor.white)
+            createLabelText(text: text, sizeText: snap.sizeText, alignment: snap.alignment, color: UIColor(named: snap.color as String)!)
         }
     }
 }

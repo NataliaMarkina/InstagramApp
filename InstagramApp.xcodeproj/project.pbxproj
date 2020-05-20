@@ -18,6 +18,7 @@
 		E168527A2465420F00D4BAD8 /* InstagramAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852792465420F00D4BAD8 /* InstagramAppTests.swift */; };
 		E16852852465420F00D4BAD8 /* InstagramAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */; };
 		E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852922465424E00D4BAD8 /* ProgressBar.swift */; };
+		E1EE7B9B2475D88100DEEB24 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EE7B9A2475D88100DEEB24 /* Color.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAppUITests.swift; sourceTree = "<group>"; };
 		E16852862465420F00D4BAD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E16852922465424E00D4BAD8 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		E1EE7B9A2475D88100DEEB24 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 				E16852922465424E00D4BAD8 /* ProgressBar.swift */,
 				E14EAF9624741C9B00143856 /* SnapModel.swift */,
 				E14EAF9824741CB000143856 /* ButtonModel.swift */,
+				E1EE7B9A2475D88100DEEB24 /* Color.xcassets */,
 			);
 			path = InstagramApp;
 			sourceTree = "<group>";
@@ -245,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E168526F2465420F00D4BAD8 /* LaunchScreen.storyboard in Resources */,
+				E1EE7B9B2475D88100DEEB24 /* Color.xcassets in Resources */,
 				E168526C2465420F00D4BAD8 /* Assets.xcassets in Resources */,
 				E16852672465420F00D4BAD8 /* Main.storyboard in Resources */,
 			);

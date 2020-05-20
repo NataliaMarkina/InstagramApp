@@ -18,4 +18,5 @@ struct SnapModel {
     var theme: NSString
     var duration: TimeInterval
     var button: ButtonModel
+    var color: NSString
 }
