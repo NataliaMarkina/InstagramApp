@@ -9,12 +9,13 @@
 import Foundation
 
 struct SnapModel {
-    var text: NSString
-    var subtext: NSString
+    var text: NSString?
+    var subtext: NSString?
     var sizeText: NSInteger
+    var sizeSubtext: NSInteger
     var alignment: NSString
-    var image: NSString
+    var image: NSString?
     var theme: NSString
-    var duration: NSInteger
+    var duration: TimeInterval
     var button: ButtonModel
 }

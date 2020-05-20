@@ -12,7 +12,7 @@ struct ButtonModel {
     var alignment: NSString
     var color: NSString
     var background: NSString
-    var text: NSString
+    var text: NSString?
     var action: NSString
     var sizeText: NSInteger
 }

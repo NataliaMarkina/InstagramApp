@@ -10,56 +10,57 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDeligate {
     func changedIndex(index: Int) {
-        //showImage(index: index)
+        showSnap(index: index)
     }
     
 
     @IBOutlet weak var imageView: UIImageView!
     //var imageView: UIImageView!
     private var progressBar: ProgressBar!
-    var pickerController = UIImagePickerController()
-    //var imageArr = [UIImage]()
-    var button: ButtonModel!
-    var snap: SnapModel!
-    var sizeButton: CGSize!
-    var sizeLabel: CGSize!
+    var buttonArray = [ButtonModel]()
+    var snapArray = [SnapModel]()
+    var durationArray = [TimeInterval]()
+    var sizeButton: CGSize = CGSize(width: 0, height: 0)
+    var sizeLabelText: CGSize = CGSize(width: 0, height: 0)
+    var sizeLabelSubtext: CGSize = CGSize(width: 0, height: 0)
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
         /*imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         imageView.backgroundColor = UIColor.white
         view.addSubview(imageView)
         
-        let viewTapSkip = UIView(frame: CGRect(x: 125, y: 0, width: UIScreen.main.bounds.width - 125, height: UIScreen.main.bounds.height))
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(skip(_:)))
-        view.addGestureRecognizer(recognizer)*/
+        let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
+        view.addGestureRecognizer(recognizerLongPress)
         
-        pickerController.delegate = self
+        let recognizerTap = UITapGestureRecognizer()
+        
+        var locationTap = recognizerTap.location(in: view) {
+            didSet {
+                if locationTap.x < UIScreen.main.bounds.width / 2
+                {
+                    recognizerTap.addTarget(self, action: #selector(back(_:)))
+                } else {
+                    recognizerTap.addTarget(self, action: #selector(skip(_:)))
+                }
+            }
+        }
+        
+        view.addGestureRecognizer(recognizerTap)*/
         
         imageView.contentMode = .scaleAspectFill
         
-        button = ButtonModel(alignment: "left", color: "black", background: "red", text: "Button", action: "", sizeText: 40)
-        snap = SnapModel(text: "Hello", subtext: "Hello", sizeText: 50, alignment: "center", image: "img1", theme: "", duration: 5, button: button)
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img1", theme: "", duration: 5.0, alignmentButton: "center", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
-        builder()
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img2", theme: "", duration: 10.0, alignmentButton: "left", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
-        /*imageArr.append(#imageLiteral(resourceName: "img1"))
-        imageArr.append(#imageLiteral(resourceName: "img2"))
-        imageArr.append(#imageLiteral(resourceName: "img3"))
-        imageArr.append(#imageLiteral(resourceName: "img4"))
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img3", theme: "", duration: 1.0, alignmentButton: "right", colorButton: "black", backgroundButton: "white", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
         
-        let img = textToImage(text: "Hello World!", image: UIImage(named:"img4.jpg")!, point: CGPoint(x: 0, y: 0))
-        
-        imageArr.append(img)
-        
-        let img1 = createButton(type: .custom, image: UIImage(named:"img4.jpg")!, point: CGPoint(x: 500, y: 600), text: "Button")
-        
-        imageArr.append(img1)
-        
-        showImage(index: 0)*/
+        builder(snap: snapArray[1], button: buttonArray[1])
     
-        progressBar = ProgressBar(countSegments: 3, duration: 5.0)
+        progressBar = ProgressBar(countSegments: 3, duration: durationArray)
         progressBar.deligate = self
         progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
         
@@ -68,23 +69,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         progressBar.animation()
     }
     
-    /*func showImage(index: Int) {
-        imageView.image = imageArr[index]
-    }*/
+    func createSnap(textSnap: NSString?,
+                    subtextSnap: NSString?,
+                    sizeTextSnap: NSInteger,
+                    sizeSubtextSnap: NSInteger,
+                    alignmentSnap: NSString,
+                    image: NSString?,
+                    theme: NSString,
+                    duration: TimeInterval,
+                    alignmentButton: NSString,
+                    colorButton: NSString,
+                    backgroundButton: NSString,
+                    textButton: NSString,
+                    action: NSString,
+                    sizeTextButton: NSInteger) {
+        let button = ButtonModel(alignment: alignmentButton, color: colorButton, background: backgroundButton, text: textButton, action: action, sizeText: sizeTextButton)
+        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button)
+        
+        buttonArray.append(button)
+        snapArray.append(snap)
+        durationArray.append(duration)
+    }
+    
+    func showSnap(index: Int) {
+        //builder(snap: snapArray[index], button: buttonArray[index])
+    }
 
     @objc func skip(_ sender: UITapGestureRecognizer) {
         progressBar.skip()
     }
     
-    @IBAction func back(_ sender: UITapGestureRecognizer) {
+    @objc func back(_ sender: UITapGestureRecognizer) {
         progressBar.back()
     }
     
-    @IBAction func paused(_ sender: UILongPressGestureRecognizer) {
+    @objc func paused(_ sender: UILongPressGestureRecognizer) {
         progressBar.isPaused = !progressBar.isPaused
     }
     
-    func textToImage(text: NSString, image: UIImage, point: CGPoint) {
+    /*func textToImage(text: NSString, image: UIImage, point: CGPoint) {
         let textColor = UIColor.white
         let textFont = UIFont(name: "Helvetica Bold", size: 80)!
         let paragrapheStyle = NSMutableParagraphStyle()
@@ -97,7 +120,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             NSAttributedStringKey.font: textFont,
             NSAttributedStringKey.foregroundColor: textColor,
             NSAttributedStringKey.paragraphStyle: paragrapheStyle
-        ] as [NSAttributedStringKey : Any]
+            ] as [NSAttributedStringKey : Any]
         
         image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
         
@@ -109,35 +132,68 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsEndImageContext()
         
         imageView.image = newImage
-    }
+    }*/
     
-    func createLabel(text: NSString,
+    func createLabelText(text: NSString,
                      sizeText: NSInteger,
                      alignment: NSString,
                      color: UIColor) {
-        let label = UILabel()
-        label.text = text as String
-        label.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeText))!
-        label.textColor = color
+        let labelText = UILabel()
+        labelText.text = text as String
+        labelText.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeText))!
+        labelText.textColor = color
+        labelText.lineBreakMode = .byWordWrapping
+        labelText.numberOfLines = 0
+        
+        switch alignment as String {
+            case "left":
+                labelText.textAlignment = .left
+            case "right":
+                labelText.textAlignment = .right
+            case "center":
+                labelText.textAlignment = .center
+            default:
+            break
+        }
+     
+        sizeLabelText = labelText.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
+     
+        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - 72 - sizeLabelSubtext.height - sizeLabelText.height - sizeButton.height)
+     
+        labelText.frame = CGRect(origin: point, size: sizeLabelText)
+     
+        view.addSubview(labelText)
+    }
+    
+    func createLabelSubtext(subtext: NSString,
+                            sizeSubtext: NSInteger,
+                            alignment: NSString,
+                            color: UIColor) {
+        let labelSubtext = UILabel()
+        labelSubtext.text = subtext as String
+        labelSubtext.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeSubtext))!
+        labelSubtext.textColor = color
+        labelSubtext.lineBreakMode = .byWordWrapping
+        labelSubtext.numberOfLines = 0
         
         switch alignment as String {
         case "left":
-            label.textAlignment = .left
+            labelSubtext.textAlignment = .left
         case "right":
-            label.textAlignment = .right
+            labelSubtext.textAlignment = .right
         case "center":
-            label.textAlignment = .center
+            labelSubtext.textAlignment = .center
         default:
             break
         }
         
-        sizeLabel = label.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        sizeLabelSubtext = labelSubtext.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
         
-        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - 48 - sizeLabel.height - sizeButton.height)
+        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - 48 - sizeLabelSubtext.height - sizeButton.height)
         
-        label.frame = CGRect(origin: point, size: sizeLabel)
+        labelSubtext.frame = CGRect(origin: point, size: sizeLabelSubtext)
         
-        view.addSubview(label)
+        view.addSubview(labelSubtext)
     }
     
     func createButton(type: UIButtonType,
@@ -173,48 +229,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         view.addSubview(newButton)
     }
     
-    func builder() {
-        imageView.image = UIImage(named: snap.image as String)!
-        
-        /*let labelText = UILabel()
-        labelText.text = snap.text as String
-        let sizeText = labelText.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-        let recText = CGRect(origin: CGPoint(x: 0, y: 0), size: sizeText)
-        let resultLabelText = UILabel(frame: recText)
-        resultLabelText.text = snap.text as String
-        resultLabelText.backgroundColor = UIColor.brown*/
-        
-        //textToImage(text: snap.text, image: UIImage(named:"img4.jpg")!, point: CGPoint(x: 0, y: 0))
-        
-        //view.addSubview(resultLabelText)
-        
-        createLabel(text: snap.text, sizeText: snap.sizeText, alignment: snap.alignment, color: UIColor.white)
-        createButton(type: .custom, text: button.text, sizeText: button.sizeText, alignment: button.alignment, background: UIColor.red, color: UIColor.black)
+    func deleteAllSubviews() {
+        view.subviews.forEach({ $0.removeFromSuperview() })
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageArr.append(chosenImage)
-            progressBar.addNewImage()
+    func builder(snap: SnapModel, button: ButtonModel) {
+        if let image = snap.image {
+            imageView.image = UIImage(named: image as String)
         }
-        dismiss(animated: true, completion: nil)
+        
+        if let text = button.text {
+            createButton(type: .custom, text: text, sizeText: button.sizeText, alignment: button.alignment, background: UIColor.red, color: UIColor.black)
+        }
+        
+        if let subtext = snap.subtext {
+            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext, alignment: snap.alignment, color: UIColor.white)
+        }
+        
+        if let text = snap.text {
+            createLabelText(text: text, sizeText: snap.sizeText, alignment: snap.alignment, color: UIColor.white)
+        }
     }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func add(_ sender: UIButton) {
-        pickerController.allowsEditing = false
-        pickerController.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
-        pickerController.sourceType = .photoLibrary
-        present(pickerController, animated: true, completion: nil)
-    }*/
 }
 
 extension UIView {

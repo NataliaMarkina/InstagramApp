@@ -16,10 +16,10 @@ protocol ProgressBarDeligate {
 class ProgressBar: UIView {
     var deligate: ProgressBarDeligate?
     private var segments = [Segment]()
-    private var duration: TimeInterval!
     private var currentIndex = 0
     private var widthSegment: CGFloat = 0.0
     private var padding: CGFloat = 3.0
+    private var duration = [TimeInterval]()
     
     var isPaused: Bool = false {
         didSet {
@@ -43,7 +43,7 @@ class ProgressBar: UIView {
         }
     }
     
-    init(countSegments: Int, duration: TimeInterval) {
+    init(countSegments: Int, duration: [TimeInterval]) {
         super.init(frame: .zero)
         
         self.duration = duration
@@ -99,7 +99,7 @@ class ProgressBar: UIView {
         currentSegment.topView.layer.cornerRadius = 3
         isPaused = false
         
-        UIView.animate(withDuration: 5.0, delay: 0, options: .curveLinear, animations: {
+        UIView.animate(withDuration: duration[currentIndex], delay: 0, options: .curveLinear, animations: {
             currentSegment.topView.frame.size.width = currentSegment.bottomView.frame.width
         }) { (finished) in
             if finished {
