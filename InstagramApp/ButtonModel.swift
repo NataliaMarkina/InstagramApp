@@ -9,10 +9,10 @@
 import Foundation
 
 struct ButtonModel {
-    var alignment: NSString
-    var color: NSString
-    var background: NSString
-    var text: NSString?
-    var action: NSString
-    var sizeText: NSInteger
+    var alignment: String
+    var color: String
+    var background: String
+    var text: String?
+    var action: String
+    var sizeText: Int
 }

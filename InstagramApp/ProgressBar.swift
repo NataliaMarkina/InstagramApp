@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-protocol ProgressBarDeligate {
+protocol ProgressBarDelegate {
     func changedIndex(index: Int)
 }
 
 class ProgressBar: UIView {
-    var deligate: ProgressBarDeligate?
+    var delegate: ProgressBarDelegate?
     private var segments = [Segment]()
     private var currentIndex = 0
     private var widthSegment: CGFloat = 0.0
@@ -25,20 +25,10 @@ class ProgressBar: UIView {
         didSet {
             if isPaused {
                 for segment in segments {
-                    let layer = segment.topView.layer
-                    let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
-                    layer.speed = 0.0
-                    layer.timeOffset = pausedTime
+                    pause(layer: segment.topView.layer)
                 }
             } else {
-                let segment = segments[currentIndex]
-                let layer = segment.topView.layer
-                let pausedTime = layer.timeOffset
-                layer.speed = 1.0
-                layer.timeOffset = 0.0
-                layer.beginTime = 0.0
-                let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
-                layer.beginTime = timeSincePause
+                resume(layer: segments[currentIndex].topView.layer)
             }
         }
     }
@@ -88,7 +78,7 @@ class ProgressBar: UIView {
         if newIndex < segments.count {
             currentIndex = newIndex
             animate()
-            self.deligate?.changedIndex(index: newIndex)
+            self.delegate?.changedIndex(index: newIndex)
         }
     }
     
@@ -129,7 +119,7 @@ class ProgressBar: UIView {
         let prevSegment = segments[currentIndex]
         prevSegment.topView.frame.size.width = 0
         animate()
-        self.deligate?.changedIndex(index: currentIndex)
+        self.delegate?.changedIndex(index: currentIndex)
     }
     
     func deleteSegments() {
@@ -161,4 +151,18 @@ class Segment: UIView {
 }
 
 extension UIView {
+    func resume(layer: CALayer) {
+        let pausedTime = layer.timeOffset
+        layer.speed = 1.0
+        layer.timeOffset = 0.0
+        layer.beginTime = 0.0
+        let timeSincePause = layer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        layer.beginTime = timeSincePause
+    }
+    
+    func pause(layer: CALayer) {
+        let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
+        layer.speed = 0.0
+        layer.timeOffset = pausedTime
+    }
 }
