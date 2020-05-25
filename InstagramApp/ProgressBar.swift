@@ -20,6 +20,7 @@ class ProgressBar: UIView {
     private var widthSegment: CGFloat = 0.0
     private var padding: CGFloat = 3.0
     private var duration = [TimeInterval]()
+    private var topViewColor: UIColor!
     
     var isPaused: Bool = false {
         didSet {
@@ -33,10 +34,11 @@ class ProgressBar: UIView {
         }
     }
     
-    init(countSegments: Int, duration: [TimeInterval]) {
+    init(countSegments: Int, duration: [TimeInterval], color: UIColor) {
         super.init(frame: .zero)
         
         self.duration = duration
+        self.topViewColor = color
         
         for _ in 0..<countSegments {
             let segment = Segment()
@@ -47,7 +49,7 @@ class ProgressBar: UIView {
         
         for segment in segments {
             segment.bottomView.backgroundColor = UIColor.gray.withAlphaComponent(0.25)
-            segment.topView.backgroundColor = UIColor.blue
+            segment.topView.backgroundColor = topViewColor
         }
     }
     

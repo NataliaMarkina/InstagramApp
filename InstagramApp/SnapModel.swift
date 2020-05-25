@@ -18,5 +18,5 @@ struct SnapModel {
     var theme: String
     var duration: TimeInterval
     var button: ButtonModel
-    var color: String
+    //var color: String
 }
