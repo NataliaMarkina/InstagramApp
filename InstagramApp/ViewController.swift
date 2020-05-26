@@ -25,6 +25,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var durationArray = [TimeInterval]()
     var currentHeight: CGFloat = 101
     var bottomPanelHeight: CGFloat = 50
+    var currentTheme: String!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,6 +264,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @objc func clickLikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
+        let newImage: UIImage!
+        
+        if currentTheme == "light" {
+            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
+        } else {
+            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
+        }
+        
+        sender.setImage(newImage, for: .selected)
+        
         if sender.isSelected {
             sender.alpha = 1
         } else {
@@ -272,6 +283,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @objc func clickDislikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        
+        let newImage: UIImage!
+        
+        if currentTheme == "light" {
+            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
+        } else {
+            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
+        }
+        
+        sender.setImage(newImage, for: .selected)
         
         if sender.isSelected {
             sender.alpha = 1
@@ -283,6 +304,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @objc func clickMarksButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         
+        let newImage = UIImage(named: "marks_icon_selected")
+        
+        if sender.isSelected && currentTheme == "light" {
+            sender.setImage(newImage, for: .selected)
+        } else if sender.isSelected && currentTheme == "dark" {
+            sender.setImage(newImage?.maskWithColor(color: UIColor.black), for: .selected)
+        } else {
+            sender.setImage(UIImage(named: "marks_icon"), for: .normal)
+        }
     }
     
     func deleteAllSubviews() {
@@ -296,7 +326,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         var buttonTextColor: UIColor!
         var textColor: UIColor!
         
-        if snap.theme == "light" {
+        currentTheme = snap.theme
+        
+        if currentTheme == "light" {
             buttonBackground = UIColor.white
             buttonTextColor = UIColor.black
             textColor = UIColor.white
@@ -335,3 +367,21 @@ extension UIView {
     }
 }
 
+extension UIImage {
+    public func maskWithColor(color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        
+        let rect = CGRect(origin: CGPoint.zero, size: size)
+        
+        color.setFill()
+        self.draw(in: rect)
+        
+        context.setBlendMode(.sourceIn)
+        context.fill(rect)
+        
+        let resultImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return resultImage
+    }
+}
