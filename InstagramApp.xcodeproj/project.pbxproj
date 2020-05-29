@@ -18,6 +18,7 @@
 		E168527A2465420F00D4BAD8 /* InstagramAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852792465420F00D4BAD8 /* InstagramAppTests.swift */; };
 		E16852852465420F00D4BAD8 /* InstagramAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */; };
 		E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852922465424E00D4BAD8 /* ProgressBar.swift */; };
+		E170075E24811A910008D77E /* VotingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170075D24811A910008D77E /* VotingModel.swift */; };
 		E1EE7B9B2475D88100DEEB24 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1EE7B9A2475D88100DEEB24 /* Color.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +57,7 @@
 		E16852842465420F00D4BAD8 /* InstagramAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAppUITests.swift; sourceTree = "<group>"; };
 		E16852862465420F00D4BAD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E16852922465424E00D4BAD8 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		E170075D24811A910008D77E /* VotingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VotingModel.swift; sourceTree = "<group>"; };
 		E1EE7B9A2475D88100DEEB24 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 				E14EAF9624741C9B00143856 /* SnapModel.swift */,
 				E14EAF9824741CB000143856 /* ButtonModel.swift */,
 				E1EE7B9A2475D88100DEEB24 /* Color.xcassets */,
+				E170075D24811A910008D77E /* VotingModel.swift */,
 			);
 			path = InstagramApp;
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				E14EAF9724741C9B00143856 /* SnapModel.swift in Sources */,
 				E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */,
 				E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */,
+				E170075E24811A910008D77E /* VotingModel.swift in Sources */,
 				E14EAF9924741CB000143856 /* ButtonModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

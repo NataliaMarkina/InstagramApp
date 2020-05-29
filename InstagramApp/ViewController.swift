@@ -15,51 +15,67 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var imageView: UIImageView!
     var contextView: UIView!
+    var tableView: UITableView!
     var bottomPanel: UIView!
     var buttonLike: UIButton!
     var buttonDislike: UIButton!
     var buttonMarks: UIButton!
     private var progressBar: ProgressBar!
+    var voting: VotingModel!
     var buttonArray = [ButtonModel]()
     var snapArray = [SnapModel]()
     var durationArray = [TimeInterval]()
+    var answerOptions = [String]()
     var currentHeight: CGFloat = 101
     var bottomPanelHeight: CGFloat = 50
     var currentTheme: String!
+    let idCell = "answerCell"
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib
+        
+        voting = VotingModel(title: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 5), (title: "Вариант 2", count: 10), (title: "Вариант 3", count: 3), (title: "Вариант 4", count: 7)])
+        
+        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped)
+        tableView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
+        tableView.setContentOffset(CGPoint(x: 24, y: 24), animated: false)
+        tableView.dataSource = self
+        tableView.delegate = self
+        //tableView.register(PollTableViewCell.self, forCellReuseIdentifier: idCell)
+        view.addSubview(tableView)
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        view.addSubview(contextView)
+        //view.addSubview(contextView)
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         imageView.backgroundColor = UIColor.white
         imageView.contentMode = .scaleAspectFill
-        contextView.addSubview(imageView)
+        //contextView.addSubview(imageView)
         
         let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
-        view.addGestureRecognizer(recognizerLongPress)
+        //view.addGestureRecognizer(recognizerLongPress)
         
         let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        view.addGestureRecognizer(recognizerTap)
+        //view.addGestureRecognizer(recognizerTap)
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20)
+        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        showSnap(index: 0)
+        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 0), (title: "Вариант 2", count: 0), (title: "Вариант 3", count: 0), (title: "Вариант 4", count: 0)])
+        
+        //showSnap(index: 0)
     
-        progressBar = ProgressBar(countSegments: snapArray.count, duration: durationArray, color: UIColor.white)
-        progressBar.delegate = self
-        progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
+        //progressBar = ProgressBar(countSegments: snapArray.count, duration: durationArray, color: UIColor.white)
+        //progressBar.delegate = self
+        //progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
         
-        view.addSubview(progressBar)
+        //view.addSubview(progressBar)
         
-        progressBar.animation()
+        //progressBar.animation()
     }
     
     func createSnap(textSnap: String?,
@@ -73,9 +89,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     alignmentButton: String,
                     textButton: String?,
                     action: String,
-                    sizeTextButton: Int) {
+                    sizeTextButton: Int,
+                    titleVoting: String?,
+                    voted: Int?,
+                    options: [(title: String, count: Int)]) {
         let button = ButtonModel(alignment: alignmentButton, text: textButton, action: action, sizeText: sizeTextButton)
-        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button)
+        let voting = VotingModel(title: titleVoting, voted: voted, options: options)
+        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button, voting: voting)
         
         buttonArray.append(button)
         snapArray.append(snap)
@@ -349,11 +369,63 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
         if let subtext = snap.subtext {
-            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext, alignment: snap.alignment, color: textColor)
+            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext!, alignment: snap.alignment, color: textColor)
         }
         
         if let text = snap.text {
-            createLabelText(text: text, sizeText: snap.sizeText, alignment: snap.alignment, color: textColor)
+            createLabelText(text: text, sizeText: snap.sizeText!, alignment: snap.alignment, color: textColor)
+        }
+    }
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: idCell)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as! PollTableViewCell
+        //cell.textLabel?.text = voting.options[indexPath.section].title
+        cell.backgroundColor = UIColor.clear
+        
+        let bottomViewCell = UIView(frame: CGRect(x: 24, y: 0, width: UIScreen.main.bounds.width - 48, height: 54))
+        bottomViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.3311234595)
+        bottomViewCell.layer.cornerRadius = 12
+        let label = UILabel(frame: CGRect(x: 10, y: 0, width: bottomViewCell.frame.width, height: bottomViewCell.frame.height))
+        label.text = voting.options[indexPath.section].title
+        label.textColor = UIColor.white
+        bottomViewCell.addSubview(label)
+        cell.addSubview(bottomViewCell)
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return voting.options.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 12.0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 54.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        var allCount = 0
+        for index in 0..<voting.options.count {
+            allCount += voting.options[index].count
+        }
+        
+        for index in 0..<voting.options.count {
+            let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: voting.options[index].count * 100 / allCount, height: 54))
+            topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
+            topViewCell.layer.cornerRadius = 12
+            tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)
         }
     }
 }

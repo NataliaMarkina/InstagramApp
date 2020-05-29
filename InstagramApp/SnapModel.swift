@@ -11,12 +11,13 @@ import Foundation
 struct SnapModel {
     var text: String?
     var subtext: String?
-    var sizeText: Int
-    var sizeSubtext: Int
+    var sizeText: Int?
+    var sizeSubtext: Int?
     var alignment: String
     var image: String?
     var theme: String
     var duration: TimeInterval
-    var button: ButtonModel
+    var button: ButtonModel?
     //var color: String
+    var voting: VotingModel?
 }
