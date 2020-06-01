@@ -13,7 +13,7 @@ struct SnapModel {
     var subtext: String?
     var sizeText: Int?
     var sizeSubtext: Int?
-    var alignment: String
+    var alignment: String?
     var image: String?
     var theme: String
     var duration: TimeInterval

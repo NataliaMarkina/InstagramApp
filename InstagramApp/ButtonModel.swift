@@ -9,10 +9,10 @@
 import Foundation
 
 struct ButtonModel {
-    var alignment: String
+    var alignment: String?
     //var color: String
     //var background: String
     var text: String?
-    var action: String
-    var sizeText: Int
+    var action: String?
+    var sizeText: Int?
 }

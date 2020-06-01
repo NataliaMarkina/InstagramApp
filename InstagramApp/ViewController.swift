@@ -17,12 +17,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var imageView: UIImageView!
     var contextView: UIView!
     var tableView: UITableView!
-    //var bottomPanel: UIView!
-    //var buttonLike: UIButton!
-    //var buttonDislike: UIButton!
-    //var buttonMarks: UIButton!
     private var progressBar: ProgressBar!
-    var voting: VotingModel!
+    //var voting: VotingModel!
     var buttonArray = [ButtonModel]()
     var bottomPanelArray = [BottomPanelModel]()
     var votingArray = [VotingModel]()
@@ -41,12 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         //voting = VotingModel(title: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 5), (title: "Вариант 2", count: 10), (title: "Вариант 3", count: 3), (title: "Вариант 4", count: 7)])
         
-        //tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped)
-        //tableView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
-        //tableView.setContentOffset(CGPoint(x: 24, y: 24), animated: false)
-        //tableView.dataSource = self
-        //tableView.delegate = self
-        //tableView.register(PollTableViewCell.self, forCellReuseIdentifier: idCell)
+        
         //view.addSubview(tableView)
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -63,13 +54,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
         view.addGestureRecognizer(recognizerTap)
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 0), (title: "Вариант 2", count: 0), (title: "Вариант 3", count: 0), (title: "Вариант 4", count: 0)])
+        createSnap(textSnap: nil, subtextSnap: nil, sizeTextSnap: 50, sizeSubtextSnap: nil, alignmentTextSnap: "left", image: nil, theme: "light", duration: 5.0, alignmentButton: nil, textButton: nil, action: "", sizeTextButton: nil, titleVoting: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 0), (title: "Вариант 2", count: 0), (title: "Вариант 3", count: 0), (title: "Вариант 4", count: 0)])
         
         showSnap(index: 0)
     
@@ -84,33 +75,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func createSnap(textSnap: String?,
                     subtextSnap: String?,
-                    sizeTextSnap: Int,
-                    sizeSubtextSnap: Int,
-                    alignmentSnap: String,
+                    sizeTextSnap: Int?,
+                    sizeSubtextSnap: Int?,
+                    alignmentTextSnap: String?,
                     image: String?,
                     theme: String,
                     duration: TimeInterval,
-                    alignmentButton: String,
+                    alignmentButton: String?,
                     textButton: String?,
                     action: String,
-                    sizeTextButton: Int,
+                    sizeTextButton: Int?,
                     titleVoting: String?,
                     voted: Int?,
                     options: [(title: String, count: Int)]) {
         let button = ButtonModel(alignment: alignmentButton, text: textButton, action: action, sizeText: sizeTextButton)
         let voting = VotingModel(title: titleVoting, voted: voted, options: options)
         let bottomPanel = BottomPanelModel(likeIcon: "like_icon", dislikeIcon: "dislike_icon", marksIcon: "marks_icon", selectedLikeIcon: false, selectedDislikeIcon: false, selectedMarksIcon: false)
-        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button, voting: voting, bottomPanel: bottomPanel)
+        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentTextSnap, image: image, theme: theme, duration: duration, button: button, voting: voting, bottomPanel: bottomPanel)
         
         buttonArray.append(button)
         bottomPanelArray.append(bottomPanel)
+        votingArray.append(voting)
         snapArray.append(snap)
         durationArray.append(duration)
     }
     
     func showSnap(index: Int) {
         deleteAllSubviews()
-        builder(snap: snapArray[index], button: buttonArray[index], bottomPanel: bottomPanelArray[index])
+        builder(snap: snapArray[index], button: buttonArray[index], bottomPanel: bottomPanelArray[index], voting: votingArray[index])
     }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
@@ -126,9 +118,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func createLabelText(text: String,
-                     sizeText: Int,
-                     alignment: String,
-                     color: UIColor) {
+                         sizeText: Int,
+                         alignment: String,
+                         color: UIColor) {
         let labelText = UILabel()
         labelText.text = text
         labelText.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeText))!
@@ -224,6 +216,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         newButton.frame = CGRect(origin: point, size: sizeButton)
         
         contextView.addSubview(newButton)
+    }
+    
+    func createVoting(title: String) {
+        imageView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
+        
+        tableView = UITableView()
+        tableView.backgroundColor = UIColor.clear
+        tableView.dataSource = self
+        tableView.delegate = self
+        let heightTable = CGFloat(tableView.numberOfSections) * 66.0
+        tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
+        
+        contextView.addSubview(tableView)
+        
+        currentHeight += heightTable + 24
+        
+        createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor.white)
     }
     
     func createBottomPanel(bottomPanel: BottomPanelModel) {
@@ -361,11 +370,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func deleteAllSubviews() {
         contextView.subviews.forEach({ $0.removeFromSuperview() })
+        imageView.image = nil
         contextView.addSubview(imageView)
         currentHeight = bottomPanelHeight + 24
     }
     
-    func builder(snap: SnapModel, button: ButtonModel, bottomPanel: BottomPanelModel) {
+    func builder(snap: SnapModel, button: ButtonModel, bottomPanel: BottomPanelModel, voting: VotingModel) {
         var buttonBackground: UIColor!
         var buttonTextColor: UIColor!
         var textColor: UIColor!
@@ -389,15 +399,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         createBottomPanel(bottomPanel: bottomPanel)
         
         if let text = button.text {
-            createButton(type: .custom, text: text, sizeText: button.sizeText, alignment: button.alignment, background: buttonBackground, color: buttonTextColor)
+            createButton(type: .custom, text: text, sizeText: button.sizeText!, alignment: button.alignment!, background: buttonBackground, color: buttonTextColor)
         }
         
         if let subtext = snap.subtext {
-            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext!, alignment: snap.alignment, color: textColor)
+            createLabelSubtext(subtext: subtext, sizeSubtext: snap.sizeSubtext!, alignment: snap.alignment!, color: textColor)
         }
         
         if let text = snap.text {
-            createLabelText(text: text, sizeText: snap.sizeText!, alignment: snap.alignment, color: textColor)
+            createLabelText(text: text, sizeText: snap.sizeText!, alignment: snap.alignment!, color: textColor)
+        }
+        
+        if let title = voting.title {
+            createVoting(title: title)
         }
     }
 }
@@ -409,15 +423,13 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: idCell)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: idCell) as! PollTableViewCell
-        //cell.textLabel?.text = voting.options[indexPath.section].title
         cell.backgroundColor = UIColor.clear
         
         let bottomViewCell = UIView(frame: CGRect(x: 24, y: 0, width: UIScreen.main.bounds.width - 48, height: 54))
         bottomViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.3311234595)
         bottomViewCell.layer.cornerRadius = 12
         let label = UILabel(frame: CGRect(x: 10, y: 0, width: bottomViewCell.frame.width, height: bottomViewCell.frame.height))
-        label.text = voting.options[indexPath.section].title
+        label.text = votingArray[currentIndex].options[indexPath.section].title
         label.textColor = UIColor.white
         bottomViewCell.addSubview(label)
         cell.addSubview(bottomViewCell)
@@ -426,7 +438,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return voting.options.count
+        return votingArray[currentIndex].options.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -440,16 +452,32 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        var allCount = 0
-        for index in 0..<voting.options.count {
-            allCount += voting.options[index].count
-        }
-        
-        for index in 0..<voting.options.count {
-            let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(voting.options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
-            topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
-            topViewCell.layer.cornerRadius = 12
-            tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)
+        if votingArray[currentIndex].voted == nil {
+            votingArray[currentIndex].voted = indexPath.section + 1
+            votingArray[currentIndex].options[indexPath.section].count += 1
+            
+            var allCount = 0
+            for index in 0..<votingArray[currentIndex].options.count {
+                allCount += votingArray[currentIndex].options[index].count
+            }
+            
+            for index in 0..<votingArray[currentIndex].options.count {
+                let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
+                topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
+                topViewCell.layer.cornerRadius = 12
+                tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)
+                
+                let label = UILabel()
+                if indexPath.section == index {
+                    label.text = "✓ \(Int(CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
+                } else {
+                    label.text = "\(Int(CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
+                }
+                label.textColor = UIColor.white
+                let sizeLabel = label.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+                label.frame = CGRect(origin: CGPoint(x: UIScreen.main.bounds.width - 48 - sizeLabel.width, y: (54 - sizeLabel.height) / 2), size: sizeLabel)
+                tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(label)
+            }
         }
     }
 }
