@@ -48,15 +48,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageView.contentMode = .scaleAspectFill
         contextView.addSubview(imageView)
         
-        let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
-        view.addGestureRecognizer(recognizerLongPress)
+        //let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
+        //view.addGestureRecognizer(recognizerLongPress)
         
-        let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        view.addGestureRecognizer(recognizerTap)
+        //let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+        //view.addGestureRecognizer(recognizerTap)
         
         createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "left", image: "img6", theme: "dark", duration: 3.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
         createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
