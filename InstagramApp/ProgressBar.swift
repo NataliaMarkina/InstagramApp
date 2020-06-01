@@ -26,10 +26,10 @@ class ProgressBar: UIView {
         didSet {
             if isPaused {
                 for segment in segments {
-                    pause(layer: segment.topView.layer)
+                    pause(layer: segment.topView.layer) // Тоже самое
                 }
             } else {
-                resume(layer: segments[currentIndex].topView.layer)
+                resume(layer: segments[currentIndex].topView.layer) //Лучше пробрасывать view, чем layer, так будет корректнее
             }
         }
     }

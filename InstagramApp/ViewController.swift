@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDelegate {
-    func changedIndex(index: Int) {
+    func changedIndex(index: Int) { //Что-то очень высоко функция
         showSnap(index: index)
     }
     
@@ -27,6 +27,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var durationArray = [TimeInterval]()
     var answerOptions = [String]()
     var currentHeight: CGFloat = 101
+
+
+    // Вот такое - это магические числа. Если надо зафиксировать какие-то константы, то лучше завести тогда:
+    /* enum Consts {
+        static var tableHeight: CGFloat = 100
+    } */
+
     var bottomPanelHeight: CGFloat = 50
     var currentTheme: String!
     let idCell = "answerCell"
@@ -42,6 +49,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         tableView.setContentOffset(CGPoint(x: 24, y: 24), animated: false)
         tableView.dataSource = self
         tableView.delegate = self
+
+        //Для того, чтобы убрать черточки – tableView.separatorStyle = .none
+
         //tableView.register(PollTableViewCell.self, forCellReuseIdentifier: idCell)
         view.addSubview(tableView)
 
@@ -282,7 +292,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @objc func clickLikeButton(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
+        sender.isSelected = !sender.isSelected // Вот этот код с isSelected повторяется дальше, предлагаю тебе завести отдельный класс для нижних кнопок и уже в нем реализовать isSelected кастомный. Пока очень много повторяется кода
         
         let newImage: UIImage!
         
@@ -379,6 +389,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
+    // Лучше сделать отдельный класс с TableView и в нем производить все манипуляции. Иначе таблица привязана к контроллеру будет
+    // И отдельный класс для ячейки. Сейчас все находить во ViewControllere и это очень нагромождает код.
+
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -396,7 +410,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         label.text = voting.options[indexPath.section].title
         label.textColor = UIColor.white
         bottomViewCell.addSubview(label)
-        cell.addSubview(bottomViewCell)
+        cell.addSubview(bottomViewCell) // Всю эту конфигурацию лушче проводить внутри класса ячейки(ты кстати отказалась от него, но я бы оставил)
         
         return cell
     }
