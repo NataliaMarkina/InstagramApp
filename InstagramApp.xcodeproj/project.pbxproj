@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E12BBE27248541D1008EC47D /* BottomPanelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12BBE26248541D1008EC47D /* BottomPanelModel.swift */; };
 		E14EAF9724741C9B00143856 /* SnapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EAF9624741C9B00143856 /* SnapModel.swift */; };
 		E14EAF9924741CB000143856 /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EAF9824741CB000143856 /* ButtonModel.swift */; };
 		E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852612465420F00D4BAD8 /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E12BBE26248541D1008EC47D /* BottomPanelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanelModel.swift; sourceTree = "<group>"; };
 		E14EAF9624741C9B00143856 /* SnapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapModel.swift; sourceTree = "<group>"; };
 		E14EAF9824741CB000143856 /* ButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; };
 		E168525E2465420F00D4BAD8 /* InstagramApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 				E14EAF9824741CB000143856 /* ButtonModel.swift */,
 				E1EE7B9A2475D88100DEEB24 /* Color.xcassets */,
 				E170075D24811A910008D77E /* VotingModel.swift */,
+				E12BBE26248541D1008EC47D /* BottomPanelModel.swift */,
 			);
 			path = InstagramApp;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */,
 				E170075E24811A910008D77E /* VotingModel.swift in Sources */,
 				E14EAF9924741CB000143856 /* ButtonModel.swift in Sources */,
+				E12BBE27248541D1008EC47D /* BottomPanelModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,19 +10,22 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDelegate {
     func changedIndex(index: Int) {
-        showSnap(index: index)
+        currentIndex = index
+        showSnap(index: currentIndex)
     }
     
     var imageView: UIImageView!
     var contextView: UIView!
     var tableView: UITableView!
-    var bottomPanel: UIView!
-    var buttonLike: UIButton!
-    var buttonDislike: UIButton!
-    var buttonMarks: UIButton!
+    //var bottomPanel: UIView!
+    //var buttonLike: UIButton!
+    //var buttonDislike: UIButton!
+    //var buttonMarks: UIButton!
     private var progressBar: ProgressBar!
     var voting: VotingModel!
     var buttonArray = [ButtonModel]()
+    var bottomPanelArray = [BottomPanelModel]()
+    var votingArray = [VotingModel]()
     var snapArray = [SnapModel]()
     var durationArray = [TimeInterval]()
     var answerOptions = [String]()
@@ -30,52 +33,53 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     var bottomPanelHeight: CGFloat = 50
     var currentTheme: String!
     let idCell = "answerCell"
+    var currentIndex: Int = 0
         
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
         
-        voting = VotingModel(title: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 5), (title: "Вариант 2", count: 10), (title: "Вариант 3", count: 3), (title: "Вариант 4", count: 7)])
+        //voting = VotingModel(title: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 5), (title: "Вариант 2", count: 10), (title: "Вариант 3", count: 3), (title: "Вариант 4", count: 7)])
         
-        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped)
-        tableView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
-        tableView.setContentOffset(CGPoint(x: 24, y: 24), animated: false)
-        tableView.dataSource = self
-        tableView.delegate = self
+        //tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .grouped)
+        //tableView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
+        //tableView.setContentOffset(CGPoint(x: 24, y: 24), animated: false)
+        //tableView.dataSource = self
+        //tableView.delegate = self
         //tableView.register(PollTableViewCell.self, forCellReuseIdentifier: idCell)
-        view.addSubview(tableView)
+        //view.addSubview(tableView)
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-        //view.addSubview(contextView)
+        view.addSubview(contextView)
         
         imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         imageView.backgroundColor = UIColor.white
         imageView.contentMode = .scaleAspectFill
-        //contextView.addSubview(imageView)
+        contextView.addSubview(imageView)
         
         let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
-        //view.addGestureRecognizer(recognizerLongPress)
+        view.addGestureRecognizer(recognizerLongPress)
         
         let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        //view.addGestureRecognizer(recognizerTap)
+        view.addGestureRecognizer(recognizerTap)
         
-        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "left", image: "img6", theme: "dark", duration: 10.0, alignmentButton: "left", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
-        //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
+        createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
         //createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentSnap: "right", image: "img5", theme: "light", duration: 1.0, alignmentButton: "right", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 0), (title: "Вариант 2", count: 0), (title: "Вариант 3", count: 0), (title: "Вариант 4", count: 0)])
         
-        //showSnap(index: 0)
+        showSnap(index: 0)
     
-        //progressBar = ProgressBar(countSegments: snapArray.count, duration: durationArray, color: UIColor.white)
-        //progressBar.delegate = self
-        //progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
+        progressBar = ProgressBar(countSegments: snapArray.count, duration: durationArray, color: UIColor.white)
+        progressBar.delegate = self
+        progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
         
-        //view.addSubview(progressBar)
+        view.addSubview(progressBar)
         
-        //progressBar.animation()
+        progressBar.animation()
     }
     
     func createSnap(textSnap: String?,
@@ -95,16 +99,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                     options: [(title: String, count: Int)]) {
         let button = ButtonModel(alignment: alignmentButton, text: textButton, action: action, sizeText: sizeTextButton)
         let voting = VotingModel(title: titleVoting, voted: voted, options: options)
-        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button, voting: voting)
+        let bottomPanel = BottomPanelModel(likeIcon: "like_icon", dislikeIcon: "dislike_icon", marksIcon: "marks_icon", selectedLikeIcon: false, selectedDislikeIcon: false, selectedMarksIcon: false)
+        let snap = SnapModel(text: textSnap, subtext: subtextSnap, sizeText: sizeTextSnap, sizeSubtext: sizeSubtextSnap, alignment: alignmentSnap, image: image, theme: theme, duration: duration, button: button, voting: voting, bottomPanel: bottomPanel)
         
         buttonArray.append(button)
+        bottomPanelArray.append(bottomPanel)
         snapArray.append(snap)
         durationArray.append(duration)
     }
     
     func showSnap(index: Int) {
         deleteAllSubviews()
-        builder(snap: snapArray[index], button: buttonArray[index])
+        builder(snap: snapArray[index], button: buttonArray[index], bottomPanel: bottomPanelArray[index])
     }
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
@@ -118,33 +124,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @objc func paused(_ sender: UILongPressGestureRecognizer) {
         progressBar.isPaused = !progressBar.isPaused
     }
-    
-    /*func textToImage(text: NSString, image: UIImage, point: CGPoint) {
-        let textColor = UIColor.white
-        let textFont = UIFont(name: "Helvetica Bold", size: 80)!
-        let paragrapheStyle = NSMutableParagraphStyle()
-        paragrapheStyle.alignment = .center
-        
-        let scale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(image.size, false, scale)
-        
-        let attributes = [
-            NSAttributedStringKey.font: textFont,
-            NSAttributedStringKey.foregroundColor: textColor,
-            NSAttributedStringKey.paragraphStyle: paragrapheStyle
-            ] as [NSAttributedStringKey : Any]
-        
-        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-        
-        let rect = CGRect(x: point.x, y: point.y, width: image.size.width, height: image.size.height)
-        
-        text.draw(in: rect, withAttributes: attributes)
-        
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        imageView.image = newImage
-    }*/
     
     func createLabelText(text: String,
                      sizeText: Int,
@@ -247,82 +226,127 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         contextView.addSubview(newButton)
     }
     
-    func createBottomPanel() {
-        bottomPanel = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - bottomPanelHeight, width: UIScreen.main.bounds.width, height: bottomPanelHeight))
-        contextView.addSubview(bottomPanel)
+    func createBottomPanel(bottomPanel: BottomPanelModel) {
+        let newBottomPanel = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - bottomPanelHeight, width: UIScreen.main.bounds.width, height: bottomPanelHeight))
+        contextView.addSubview(newBottomPanel)
         
-        let likeIcon = UIImage(named: "like_icon")
-        buttonLike = UIButton()
-        buttonLike.setImage(likeIcon, for: .normal)
+        let likeIcon = UIImage(named: bottomPanel.likeIcon)
+        let buttonLike = UIButton()
+        if (snapArray[currentIndex].bottomPanel.selectedLikeIcon) {
+            let newImage: UIImage!
+            
+            if currentTheme == "light" {
+                newImage = likeIcon?.maskWithColor(color: UIColor.white)
+            } else {
+                newImage = likeIcon?.maskWithColor(color: UIColor.black)
+            }
+            
+            buttonLike.setImage(newImage, for: .selected)
+            buttonLike.isSelected = true
+            buttonLike.alpha = 1
+        } else {
+            buttonLike.setImage(likeIcon, for: .normal)
+            buttonLike.isSelected = false
+            buttonLike.alpha = 0.5
+        }
         let sizeButtomLike = buttonLike.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         buttonLike.frame = CGRect(origin: CGPoint(x: 24, y: 0), size: sizeButtomLike)
-        buttonLike.alpha = 0.5
-        buttonLike.isSelected = false
         buttonLike.addTarget(self, action: #selector(clickLikeButton(_:)), for: .touchUpInside)
-        bottomPanel.addSubview(buttonLike)
+        newBottomPanel.addSubview(buttonLike)
         
-        let dislikeIcon = UIImage(named: "dislike_icon")
-        buttonDislike = UIButton()
-        buttonDislike.setImage(dislikeIcon, for: .normal)
+        let dislikeIcon = UIImage(named: bottomPanel.dislikeIcon)
+        let buttonDislike = UIButton()
+        if (snapArray[currentIndex].bottomPanel.selectedDislikeIcon) {
+            let newImage: UIImage!
+            
+            if currentTheme == "light" {
+                newImage = dislikeIcon?.maskWithColor(color: UIColor.white)
+            } else {
+                newImage = dislikeIcon?.maskWithColor(color: UIColor.black)
+            }
+            
+            buttonDislike.setImage(newImage, for: .selected)
+            buttonDislike.isSelected = true
+            buttonDislike.alpha = 1
+        } else {
+            buttonDislike.setImage(dislikeIcon, for: .normal)
+            buttonDislike.isSelected = false
+            buttonDislike.alpha = 0.5
+        }
         let sizeButtomDislike = buttonDislike.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         buttonDislike.frame = CGRect(origin: CGPoint(x: 48 + sizeButtomLike.width, y: 0), size: sizeButtomDislike)
-        buttonDislike.alpha = 0.5
-        buttonDislike.isSelected = false
         buttonDislike.addTarget(self, action: #selector(clickDislikeButton(_:)), for: .touchUpInside)
-        bottomPanel.addSubview(buttonDislike)
+        newBottomPanel.addSubview(buttonDislike)
         
-        let marksIcon = UIImage(named: "marks_icon")
-        buttonMarks = UIButton()
-        buttonMarks.setImage(marksIcon, for: .normal)
+        let marksIcon = UIImage(named: bottomPanel.marksIcon)
+        let buttonMarks = UIButton()
+        if (snapArray[currentIndex].bottomPanel.selectedMarksIcon) {
+            let newImage = UIImage(named: "marks_icon_selected")
+            
+            if currentTheme == "light" {
+                buttonMarks.setImage(newImage, for: .selected)
+            } else {
+                buttonMarks.setImage(newImage?.maskWithColor(color: UIColor.black), for: .selected)
+            }
+            
+            buttonMarks.isSelected = true
+        } else {
+            buttonMarks.setImage(marksIcon, for: .normal)
+            buttonMarks.isSelected = false
+        }
         let sizeButtomMarks = buttonMarks.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         buttonMarks.frame = CGRect(origin: CGPoint(x: UIScreen.main.bounds.width - 24 - sizeButtomMarks.width, y: 0), size: sizeButtomMarks)
-        buttonMarks.isSelected = false
         buttonMarks.addTarget(self, action: #selector(clickMarksButton(_:)), for: .touchUpInside)
-        bottomPanel.addSubview(buttonMarks)
+        newBottomPanel.addSubview(buttonMarks)
     }
     
     @objc func clickLikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        
-        let newImage: UIImage!
-        
-        if currentTheme == "light" {
-            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
-        } else {
-            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
-        }
-        
-        sender.setImage(newImage, for: .selected)
+        snapArray[currentIndex].bottomPanel.selectedLikeIcon = !snapArray[currentIndex].bottomPanel.selectedLikeIcon
         
         if sender.isSelected {
+            let newImage: UIImage!
+            
+            if currentTheme == "light" {
+                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
+            } else {
+                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
+            }
+            
+            sender.setImage(newImage, for: .selected)
+            
             sender.alpha = 1
         } else {
+            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
             sender.alpha = 0.5
         }
     }
     
     @objc func clickDislikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        
-        let newImage: UIImage!
-        
-        if currentTheme == "light" {
-            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
-        } else {
-            newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
-        }
-        
-        sender.setImage(newImage, for: .selected)
+        snapArray[currentIndex].bottomPanel.selectedDislikeIcon = !snapArray[currentIndex].bottomPanel.selectedDislikeIcon
         
         if sender.isSelected {
+            let newImage: UIImage!
+            
+            if currentTheme == "light" {
+                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
+            } else {
+                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
+            }
+            
+            sender.setImage(newImage, for: .selected)
+            
             sender.alpha = 1
         } else {
+            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
             sender.alpha = 0.5
         }
     }
     
     @objc func clickMarksButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        snapArray[currentIndex].bottomPanel.selectedMarksIcon = !snapArray[currentIndex].bottomPanel.selectedMarksIcon
         
         let newImage = UIImage(named: "marks_icon_selected")
         
@@ -341,7 +365,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         currentHeight = bottomPanelHeight + 24
     }
     
-    func builder(snap: SnapModel, button: ButtonModel) {
+    func builder(snap: SnapModel, button: ButtonModel, bottomPanel: BottomPanelModel) {
         var buttonBackground: UIColor!
         var buttonTextColor: UIColor!
         var textColor: UIColor!
@@ -362,7 +386,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             imageView.image = UIImage(named: image)
         }
         
-        createBottomPanel()
+        createBottomPanel(bottomPanel: bottomPanel)
         
         if let text = button.text {
             createButton(type: .custom, text: text, sizeText: button.sizeText, alignment: button.alignment, background: buttonBackground, color: buttonTextColor)
@@ -422,7 +446,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         for index in 0..<voting.options.count {
-            let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: voting.options[index].count * 100 / allCount, height: 54))
+            let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(voting.options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
             topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
             topViewCell.layer.cornerRadius = 12
             tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)

@@ -20,4 +20,5 @@ struct SnapModel {
     var button: ButtonModel?
     //var color: String
     var voting: VotingModel?
+    var bottomPanel: BottomPanelModel
 }
