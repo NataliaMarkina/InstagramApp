@@ -9,27 +9,24 @@
 import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDelegate {
-    func changedIndex(index: Int) {
-        currentIndex = index
-        showSnap(index: currentIndex)
-    }
-    
     var imageView: UIImageView!
     var contextView: UIView!
     var tableView: UITableView!
     private var progressBar: ProgressBar!
-    //var voting: VotingModel!
     var buttonArray = [ButtonModel]()
     var bottomPanelArray = [BottomPanelModel]()
     var votingArray = [VotingModel]()
     var snapArray = [SnapModel]()
     var durationArray = [TimeInterval]()
     var answerOptions = [String]()
-    var currentHeight: CGFloat = 101
-    var bottomPanelHeight: CGFloat = 50
     var currentTheme: String!
-    let idCell = "answerCell"
-    var currentIndex: Int = 0
+    
+    enum Const {
+        static var currentHeight: CGFloat = 101
+        static let bottomPanelHeight: CGFloat = 50
+        static var currentIndex: Int = 0
+        static let idCell = "answerCell"
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +68,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         view.addSubview(progressBar)
         
         progressBar.animation()
+    }
+    
+    func changedIndex(index: Int) {
+        Const.currentIndex = index
+        showSnap(index: Const.currentIndex)
     }
     
     func createSnap(textSnap: String?,
@@ -141,9 +143,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
      
         let sizeLabelText = labelText.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
      
-        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (currentHeight + sizeLabelText.height))
+        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (Const.currentHeight + sizeLabelText.height))
         
-        currentHeight += sizeLabelText.height
+        Const.currentHeight += sizeLabelText.height
      
         labelText.frame = CGRect(origin: point, size: sizeLabelText)
      
@@ -174,9 +176,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let sizeLabelSubtext = labelSubtext.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
         
-        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (currentHeight + sizeLabelSubtext.height))
+        let point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (Const.currentHeight + sizeLabelSubtext.height))
         
-        currentHeight += sizeLabelSubtext.height + 16
+        Const.currentHeight += sizeLabelSubtext.height + 16
         
         labelSubtext.frame = CGRect(origin: point, size: sizeLabelSubtext)
         
@@ -202,16 +204,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         switch alignment {
         case "left":
-            point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (currentHeight + sizeButton.height))
+            point = CGPoint(x: 24, y: UIScreen.main.bounds.height - (Const.currentHeight + sizeButton.height))
         case "right":
-            point = CGPoint(x: UIScreen.main.bounds.width - (24 + sizeButton.width), y: UIScreen.main.bounds.height - (currentHeight + sizeButton.height))
+            point = CGPoint(x: UIScreen.main.bounds.width - (24 + sizeButton.width), y: UIScreen.main.bounds.height - (Const.currentHeight + sizeButton.height))
         case "center":
-            point = CGPoint(x: (UIScreen.main.bounds.width - sizeButton.width) / 2, y: UIScreen.main.bounds.height - (currentHeight + sizeButton.height))
+            point = CGPoint(x: (UIScreen.main.bounds.width - sizeButton.width) / 2, y: UIScreen.main.bounds.height - (Const.currentHeight + sizeButton.height))
         default:
             break
         }
         
-        currentHeight += sizeButton.height + 24
+        Const.currentHeight += sizeButton.height + 24
         
         newButton.frame = CGRect(origin: point, size: sizeButton)
         
@@ -222,26 +224,28 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
         
         tableView = UITableView()
+        tableView.register(TableViewCell.self, forCellReuseIdentifier: Const.idCell)
         tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
         let heightTable = CGFloat(tableView.numberOfSections) * 66.0
-        tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
+        tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (Const.currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
         
         contextView.addSubview(tableView)
         
-        currentHeight += heightTable + 24
+        Const.currentHeight += heightTable + 24
         
         createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor.white)
     }
     
     func createBottomPanel(bottomPanel: BottomPanelModel) {
-        let newBottomPanel = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - bottomPanelHeight, width: UIScreen.main.bounds.width, height: bottomPanelHeight))
+        let newBottomPanel = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - Const.bottomPanelHeight, width: UIScreen.main.bounds.width, height: Const.bottomPanelHeight))
         contextView.addSubview(newBottomPanel)
         
         let likeIcon = UIImage(named: bottomPanel.likeIcon)
         let buttonLike = UIButton()
-        if (snapArray[currentIndex].bottomPanel.selectedLikeIcon) {
+        if (snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon) {
             let newImage: UIImage!
             
             if currentTheme == "light" {
@@ -265,7 +269,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let dislikeIcon = UIImage(named: bottomPanel.dislikeIcon)
         let buttonDislike = UIButton()
-        if (snapArray[currentIndex].bottomPanel.selectedDislikeIcon) {
+        if (snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon) {
             let newImage: UIImage!
             
             if currentTheme == "light" {
@@ -289,7 +293,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let marksIcon = UIImage(named: bottomPanel.marksIcon)
         let buttonMarks = UIButton()
-        if (snapArray[currentIndex].bottomPanel.selectedMarksIcon) {
+        if (snapArray[Const.currentIndex].bottomPanel.selectedMarksIcon) {
             let newImage = UIImage(named: "marks_icon_selected")
             
             if currentTheme == "light" {
@@ -311,7 +315,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @objc func clickLikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        snapArray[currentIndex].bottomPanel.selectedLikeIcon = !snapArray[currentIndex].bottomPanel.selectedLikeIcon
+        snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon = !snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon
         
         if sender.isSelected {
             let newImage: UIImage!
@@ -333,7 +337,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @objc func clickDislikeButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        snapArray[currentIndex].bottomPanel.selectedDislikeIcon = !snapArray[currentIndex].bottomPanel.selectedDislikeIcon
+        snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon = !snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon
         
         if sender.isSelected {
             let newImage: UIImage!
@@ -355,7 +359,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @objc func clickMarksButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
-        snapArray[currentIndex].bottomPanel.selectedMarksIcon = !snapArray[currentIndex].bottomPanel.selectedMarksIcon
+        snapArray[Const.currentIndex].bottomPanel.selectedMarksIcon = !snapArray[Const.currentIndex].bottomPanel.selectedMarksIcon
         
         let newImage = UIImage(named: "marks_icon_selected")
         
@@ -372,7 +376,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         contextView.subviews.forEach({ $0.removeFromSuperview() })
         imageView.image = nil
         contextView.addSubview(imageView)
-        currentHeight = bottomPanelHeight + 24
+        Const.currentHeight = Const.bottomPanelHeight + 24
     }
     
     func builder(snap: SnapModel, button: ButtonModel, bottomPanel: BottomPanelModel, voting: VotingModel) {
@@ -422,23 +426,14 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: idCell)
-        cell.backgroundColor = UIColor.clear
-        
-        let bottomViewCell = UIView(frame: CGRect(x: 24, y: 0, width: UIScreen.main.bounds.width - 48, height: 54))
-        bottomViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.3311234595)
-        bottomViewCell.layer.cornerRadius = 12
-        let label = UILabel(frame: CGRect(x: 10, y: 0, width: bottomViewCell.frame.width, height: bottomViewCell.frame.height))
-        label.text = votingArray[currentIndex].options[indexPath.section].title
-        label.textColor = UIColor.white
-        bottomViewCell.addSubview(label)
-        cell.addSubview(bottomViewCell)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Const.idCell) as! TableViewCell
+        cell.label.text = votingArray[Const.currentIndex].options[indexPath.section].title
         
         return cell
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return votingArray[currentIndex].options.count
+        return votingArray[Const.currentIndex].options.count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -452,26 +447,26 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if votingArray[currentIndex].voted == nil {
-            votingArray[currentIndex].voted = indexPath.section + 1
-            votingArray[currentIndex].options[indexPath.section].count += 1
+        if votingArray[Const.currentIndex].voted == nil {
+            votingArray[Const.currentIndex].voted = indexPath.section + 1
+            votingArray[Const.currentIndex].options[indexPath.section].count += 1
             
             var allCount = 0
-            for index in 0..<votingArray[currentIndex].options.count {
-                allCount += votingArray[currentIndex].options[index].count
+            for index in 0..<votingArray[Const.currentIndex].options.count {
+                allCount += votingArray[Const.currentIndex].options[index].count
             }
             
-            for index in 0..<votingArray[currentIndex].options.count {
-                let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
+            for index in 0..<votingArray[Const.currentIndex].options.count {
+                let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
                 topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
                 topViewCell.layer.cornerRadius = 12
                 tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)
                 
                 let label = UILabel()
                 if indexPath.section == index {
-                    label.text = "✓ \(Int(CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
+                    label.text = "✓ \(Int(CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
                 } else {
-                    label.text = "\(Int(CGFloat(votingArray[currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
+                    label.text = "\(Int(CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
                 }
                 label.textColor = UIColor.white
                 let sizeLabel = label.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))

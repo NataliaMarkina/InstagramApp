@@ -26,10 +26,10 @@ class ProgressBar: UIView {
         didSet {
             if isPaused {
                 for segment in segments {
-                    pause(layer: segment.topView.layer)
+                    pause(view: segment.topView)
                 }
             } else {
-                resume(layer: segments[currentIndex].topView.layer)
+                resume(view: segments[currentIndex].topView)
             }
         }
     }
@@ -153,7 +153,8 @@ class Segment: UIView {
 }
 
 extension UIView {
-    func resume(layer: CALayer) {
+    func resume(view: UIView) {
+        let layer = view.layer
         let pausedTime = layer.timeOffset
         layer.speed = 1.0
         layer.timeOffset = 0.0
@@ -162,7 +163,8 @@ extension UIView {
         layer.beginTime = timeSincePause
     }
     
-    func pause(layer: CALayer) {
+    func pause(view: UIView) {
+        let layer = view.layer
         let pausedTime = layer.convertTime(CACurrentMediaTime(), from: nil)
         layer.speed = 0.0
         layer.timeOffset = pausedTime
