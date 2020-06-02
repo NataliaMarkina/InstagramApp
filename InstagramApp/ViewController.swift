@@ -9,9 +9,10 @@
 import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ProgressBarDelegate {
+    
     var imageView: UIImageView!
     var contextView: UIView!
-    var tableView: UITableView!
+    var tableViewController: TableViewController!
     private var progressBar: ProgressBar!
     var buttonArray = [ButtonModel]()
     var bottomPanelArray = [BottomPanelModel]()
@@ -31,11 +32,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
-        
-        //voting = VotingModel(title: "Вопрос в опросе", voted: nil, options: [(title: "Вариант 1", count: 5), (title: "Вариант 2", count: 10), (title: "Вариант 3", count: 3), (title: "Вариант 4", count: 7)])
-        
-        
-        //view.addSubview(tableView)
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.addSubview(contextView)
@@ -45,11 +41,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageView.contentMode = .scaleAspectFill
         contextView.addSubview(imageView)
         
-        //let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
-        //view.addGestureRecognizer(recognizerLongPress)
+        let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
+        view.addGestureRecognizer(recognizerLongPress)
         
-        //let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        //view.addGestureRecognizer(recognizerTap)
+        let recognizerTap = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+        view.addGestureRecognizer(recognizerTap)
         
         createSnap(textSnap: "Заголовок в две строки", subtextSnap: "Расположение эпизодов неумеренно индуцирует культурный дактиль. Целевой трафик, следовательно, обуславливает дактиль.", sizeTextSnap: 50, sizeSubtextSnap: 30, alignmentTextSnap: "center", image: "img2", theme: "light", duration: 5.0, alignmentButton: "center", textButton: "Большая кнопка", action: "", sizeTextButton: 20, titleVoting: nil, voted: nil, options: [])
         
@@ -223,20 +219,27 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func createVoting(title: String) {
         imageView.backgroundColor = #colorLiteral(red: 0.7723932573, green: 0.4718477153, blue: 1, alpha: 1)
         
-        tableView = UITableView()
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: Const.idCell)
-        tableView.backgroundColor = UIColor.clear
-        tableView.separatorStyle = .none
-        tableView.dataSource = self
-        tableView.delegate = self
-        let heightTable = CGFloat(tableView.numberOfSections) * 66.0
-        tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (Const.currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
+        tableViewController = TableViewController(style: .grouped, votingArray: votingArray, currentIndex: Const.currentIndex)
+        let heightTable = CGFloat(tableViewController.tableView.numberOfSections) * 66.0
+        tableViewController.tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (Const.currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
         
-        contextView.addSubview(tableView)
+        contextView.addSubview(tableViewController.tableView)
         
         Const.currentHeight += heightTable + 24
         
         createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor.white)
+    }
+    
+    func getNewImage(image: UIImage) -> UIImage {
+        let newImage: UIImage!
+        
+        if currentTheme == "light" {
+            newImage = image.maskWithColor(color: UIColor.white)
+        } else {
+            newImage = image.maskWithColor(color: UIColor.black)
+        }
+        
+        return newImage
     }
     
     func createBottomPanel(bottomPanel: BottomPanelModel) {
@@ -246,15 +249,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let likeIcon = UIImage(named: bottomPanel.likeIcon)
         let buttonLike = UIButton()
         if (snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon) {
-            let newImage: UIImage!
-            
-            if currentTheme == "light" {
-                newImage = likeIcon?.maskWithColor(color: UIColor.white)
-            } else {
-                newImage = likeIcon?.maskWithColor(color: UIColor.black)
-            }
-            
-            buttonLike.setImage(newImage, for: .selected)
+            buttonLike.setImage(getNewImage(image: likeIcon!), for: .selected)
             buttonLike.isSelected = true
             buttonLike.alpha = 1
         } else {
@@ -270,15 +265,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let dislikeIcon = UIImage(named: bottomPanel.dislikeIcon)
         let buttonDislike = UIButton()
         if (snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon) {
-            let newImage: UIImage!
-            
-            if currentTheme == "light" {
-                newImage = dislikeIcon?.maskWithColor(color: UIColor.white)
-            } else {
-                newImage = dislikeIcon?.maskWithColor(color: UIColor.black)
-            }
-            
-            buttonDislike.setImage(newImage, for: .selected)
+            buttonDislike.setImage(getNewImage(image: dislikeIcon!), for: .selected)
             buttonDislike.isSelected = true
             buttonDislike.alpha = 1
         } else {
@@ -318,16 +305,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon = !snapArray[Const.currentIndex].bottomPanel.selectedLikeIcon
         
         if sender.isSelected {
-            let newImage: UIImage!
-            
-            if currentTheme == "light" {
-                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
-            } else {
-                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
-            }
-            
-            sender.setImage(newImage, for: .selected)
-            
+            sender.setImage(getNewImage(image: sender.image(for: .normal)!), for: .selected)
             sender.alpha = 1
         } else {
             sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
@@ -340,16 +318,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon = !snapArray[Const.currentIndex].bottomPanel.selectedDislikeIcon
         
         if sender.isSelected {
-            let newImage: UIImage!
-            
-            if currentTheme == "light" {
-                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.white)
-            } else {
-                newImage = sender.image(for: .normal)?.maskWithColor(color: UIColor.black)
-            }
-            
-            sender.setImage(newImage, for: .selected)
-            
+            sender.setImage(getNewImage(image: sender.image(for: .normal)!), for: .selected)
             sender.alpha = 1
         } else {
             sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
@@ -416,72 +385,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         if let title = voting.title {
             createVoting(title: title)
-        }
-    }
-}
-
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Const.idCell) as! TableViewCell
-        cell.label.text = votingArray[Const.currentIndex].options[indexPath.section].title
-        
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return votingArray[Const.currentIndex].options.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12.0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 54.0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        if votingArray[Const.currentIndex].voted == nil {
-            votingArray[Const.currentIndex].voted = indexPath.section + 1
-            votingArray[Const.currentIndex].options[indexPath.section].count += 1
-            
-            var allCount = 0
-            for index in 0..<votingArray[Const.currentIndex].options.count {
-                allCount += votingArray[Const.currentIndex].options[index].count
-            }
-            
-            for index in 0..<votingArray[Const.currentIndex].options.count {
-                let topViewCell = UIView(frame: CGRect(x: 24, y: 0, width: CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * (UIScreen.main.bounds.width - 48), height: 54))
-                topViewCell.backgroundColor = #colorLiteral(red: 0.8842288507, green: 0.8352838254, blue: 1, alpha: 0.5)
-                topViewCell.layer.cornerRadius = 12
-                tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(topViewCell)
-                
-                let label = UILabel()
-                if indexPath.section == index {
-                    label.text = "✓ \(Int(CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
-                } else {
-                    label.text = "\(Int(CGFloat(votingArray[Const.currentIndex].options[index].count) / CGFloat(allCount) * 100))%"
-                }
-                label.textColor = UIColor.white
-                let sizeLabel = label.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
-                label.frame = CGRect(origin: CGPoint(x: UIScreen.main.bounds.width - 48 - sizeLabel.width, y: (54 - sizeLabel.height) / 2), size: sizeLabel)
-                tableView.cellForRow(at: IndexPath(row: 0, section: index))?.addSubview(label)
-            }
-        }
-    }
-}
-
-extension UIView {
-    func asImage() -> UIImage {
-        let renderer = UIGraphicsImageRenderer(bounds: bounds)
-        return renderer.image { rendererContext in
-            layer.render(in: rendererContext.cgContext)
         }
     }
 }

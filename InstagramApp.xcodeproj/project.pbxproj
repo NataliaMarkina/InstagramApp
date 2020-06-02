@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E12BBE27248541D1008EC47D /* BottomPanelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12BBE26248541D1008EC47D /* BottomPanelModel.swift */; };
 		E12BBE29248577FD008EC47D /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12BBE28248577FD008EC47D /* TableViewCell.swift */; };
+		E142AFE324863B8D008D44F2 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E142AFE224863B8D008D44F2 /* TableViewController.swift */; };
 		E14EAF9724741C9B00143856 /* SnapModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EAF9624741C9B00143856 /* SnapModel.swift */; };
 		E14EAF9924741CB000143856 /* ButtonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14EAF9824741CB000143856 /* ButtonModel.swift */; };
 		E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16852612465420F00D4BAD8 /* AppDelegate.swift */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		E12BBE26248541D1008EC47D /* BottomPanelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomPanelModel.swift; sourceTree = "<group>"; };
 		E12BBE28248577FD008EC47D /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		E142AFE224863B8D008D44F2 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		E14EAF9624741C9B00143856 /* SnapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapModel.swift; sourceTree = "<group>"; };
 		E14EAF9824741CB000143856 /* ButtonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModel.swift; sourceTree = "<group>"; };
 		E168525E2465420F00D4BAD8 /* InstagramApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstagramApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -127,6 +129,7 @@
 				E170075D24811A910008D77E /* VotingModel.swift */,
 				E12BBE26248541D1008EC47D /* BottomPanelModel.swift */,
 				E12BBE28248577FD008EC47D /* TableViewCell.swift */,
+				E142AFE224863B8D008D44F2 /* TableViewController.swift */,
 			);
 			path = InstagramApp;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				E168526A2465420F00D4BAD8 /* InstagramApp.xcdatamodeld in Sources */,
 				E16852642465420F00D4BAD8 /* ViewController.swift in Sources */,
 				E14EAF9724741C9B00143856 /* SnapModel.swift in Sources */,
+				E142AFE324863B8D008D44F2 /* TableViewController.swift in Sources */,
 				E12BBE29248577FD008EC47D /* TableViewCell.swift in Sources */,
 				E16852932465424E00D4BAD8 /* ProgressBar.swift in Sources */,
 				E16852622465420F00D4BAD8 /* AppDelegate.swift in Sources */,
