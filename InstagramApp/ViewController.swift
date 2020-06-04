@@ -33,15 +33,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
-        
-        for family: String in UIFont.familyNames
-        {
-            print(family)
-            for name: String in UIFont.fontNames(forFamilyName: family)
-            {
-                print("== \(name)")
-            }
-        }
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.addSubview(contextView)
