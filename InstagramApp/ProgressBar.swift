@@ -18,7 +18,7 @@ class ProgressBar: UIView {
     private var segments = [Segment]()
     private var currentIndex = 0
     private var widthSegment: CGFloat = 0.0
-    private var padding: CGFloat = 3.0
+    private var padding: CGFloat = 4.0
     private var duration = [TimeInterval]()
     private var topViewColor: UIColor!
     
@@ -64,12 +64,12 @@ class ProgressBar: UIView {
         widthSegment = width
         
         for (index, segment) in segments.enumerated() {
-            let newFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
+            let newFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 3)
             segment.bottomView.frame = newFrame
             segment.bottomView.layer.cornerRadius = 5
             
             if index < currentIndex {
-                let newTopFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 6)
+                let newTopFrame = CGRect(x: (width + padding) * CGFloat(index), y: 0, width: width, height: 3)
                 segment.topView.frame = newTopFrame
             }
         }
@@ -85,10 +85,10 @@ class ProgressBar: UIView {
     }
     
     func animate() {
-        let newFrame = CGRect(x: (self.widthSegment + padding) * CGFloat(currentIndex), y: 0, width: 0, height: 6)
+        let newFrame = CGRect(x: (self.widthSegment + padding) * CGFloat(currentIndex), y: 0, width: 0, height: 3)
         let currentSegment = segments[currentIndex]
         currentSegment.topView.frame = newFrame
-        currentSegment.topView.layer.cornerRadius = 3
+        currentSegment.topView.layer.cornerRadius = 5
         isPaused = false
         
         UIView.animate(withDuration: duration[currentIndex], delay: 0, options: .curveLinear, animations: {

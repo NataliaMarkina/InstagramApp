@@ -51,6 +51,7 @@ class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Const.idCell) as! TableViewCell
         cell.label.text = votingArray[currentIndex].options[indexPath.section].title
+        cell.selectionStyle = .none
         
         return cell
     }

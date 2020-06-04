@@ -12,6 +12,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var imageView: UIImageView!
     var contextView: UIView!
+    var closeButton: UIButton!
     var tableViewController: TableViewController!
     private var progressBar: ProgressBar!
     var buttonArray = [ButtonModel]()
@@ -32,6 +33,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib
+        
+        for family: String in UIFont.familyNames
+        {
+            print(family)
+            for name: String in UIFont.fontNames(forFamilyName: family)
+            {
+                print("== \(name)")
+            }
+        }
 
         contextView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         view.addSubview(contextView)
@@ -40,6 +50,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imageView.backgroundColor = UIColor.white
         imageView.contentMode = .scaleAspectFill
         contextView.addSubview(imageView)
+        
+        closeButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 36, y: 36, width: 16, height: 16))
+        closeButton.setImage(UIImage(named: "close_icon"), for: .normal)
+        closeButton.addTarget(self, action: #selector(closeButtonClick(_:)), for: .touchUpInside)
+        view.addSubview(closeButton)
         
         let recognizerLongPress = UILongPressGestureRecognizer(target: self, action: #selector(paused(_:)))
         view.addGestureRecognizer(recognizerLongPress)
@@ -59,7 +74,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
         progressBar = ProgressBar(countSegments: snapArray.count, duration: durationArray, color: UIColor.white)
         progressBar.delegate = self
-        progressBar.frame = CGRect(x: 15, y: 50, width: view.frame.width - 30, height: 6)
+        progressBar.frame = CGRect(x: 12, y: 12, width: view.frame.width - 24, height: 3)
         
         view.addSubview(progressBar)
         
@@ -103,12 +118,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         builder(snap: snapArray[index], button: buttonArray[index], bottomPanel: bottomPanelArray[index], voting: votingArray[index])
     }
     
+    @objc func closeButtonClick(_ sender: UIButton) {
+        print("Close button clicked")
+    }
+    
     @objc func tap(_ sender: UITapGestureRecognizer) {
         if sender.location(in: view).x < UIScreen.main.bounds.width / 3 {
             progressBar.back()
         } else {
             progressBar.skip()
         }
+        /*if let x = sender.location(in: tableViewController.tableView) {
+            print(sender.location(in: tableViewController.tableView))
+        }*/
+        
     }
     
     @objc func paused(_ sender: UILongPressGestureRecognizer) {
@@ -189,12 +212,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                       color: UIColor) {
         let newButton = UIButton(type: type)
         newButton.backgroundColor = background
+        newButton.layer.cornerRadius = 6
         newButton.setTitle(text, for: .normal)
         newButton.setTitleColor(color, for: .normal)
         newButton.titleLabel?.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeText))!
         newButton.titleLabel?.textAlignment = .center
+        newButton.addTarget(self, action: #selector(buttonClick(_:)), for: .touchUpInside)
         
-        let sizeButton = newButton.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
+        /*let sizeButton = newButton.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude))
         
         var point = CGPoint()
         
@@ -211,9 +236,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         Const.currentHeight += sizeButton.height + 24
         
-        newButton.frame = CGRect(origin: point, size: sizeButton)
+        newButton.frame = CGRect(origin: point, size: sizeButton)*/
+        
+        newButton.frame = CGRect(x: 24, y: UIScreen.main.bounds.height - (Const.currentHeight + 64), width: UIScreen.main.bounds.width - 48, height: 64)
+        
+        Const.currentHeight += newButton.frame.height + 24
         
         contextView.addSubview(newButton)
+    }
+    
+    @objc func buttonClick(_ sender: UIButton) {
+        print("Button clicked")
     }
     
     func createVoting(title: String) {
@@ -227,16 +260,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         Const.currentHeight += heightTable + 24
         
-        createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor.white)
+        createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor(named: "White")!)
     }
     
     func getNewImage(image: UIImage) -> UIImage {
         let newImage: UIImage!
         
         if currentTheme == "light" {
-            newImage = image.maskWithColor(color: UIColor.white)
+            newImage = image.maskWithColor(color: UIColor(named: "White")!)
         } else {
-            newImage = image.maskWithColor(color: UIColor.black)
+            newImage = image.maskWithColor(color: UIColor(named: "Black")!)
         }
         
         return newImage
@@ -286,7 +319,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if currentTheme == "light" {
                 buttonMarks.setImage(newImage, for: .selected)
             } else {
-                buttonMarks.setImage(newImage?.maskWithColor(color: UIColor.black), for: .selected)
+                buttonMarks.setImage(newImage?.maskWithColor(color: UIColor(named: "Black")!), for: .selected)
             }
             
             buttonMarks.isSelected = true
@@ -308,7 +341,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             sender.setImage(getNewImage(image: sender.image(for: .normal)!), for: .selected)
             sender.alpha = 1
         } else {
-            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
+            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor(named: "Black")!), for: .normal)
             sender.alpha = 0.5
         }
     }
@@ -321,7 +354,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             sender.setImage(getNewImage(image: sender.image(for: .normal)!), for: .selected)
             sender.alpha = 1
         } else {
-            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor.white), for: .normal)
+            sender.setImage(sender.image(for: .selected)?.maskWithColor(color: UIColor(named: "White")!), for: .normal)
             sender.alpha = 0.5
         }
     }
@@ -335,7 +368,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if sender.isSelected && currentTheme == "light" {
             sender.setImage(newImage, for: .selected)
         } else if sender.isSelected && currentTheme == "dark" {
-            sender.setImage(newImage?.maskWithColor(color: UIColor.black), for: .selected)
+            sender.setImage(newImage?.maskWithColor(color: UIColor(named: "Black")!), for: .selected)
         } else {
             sender.setImage(UIImage(named: "marks_icon"), for: .normal)
         }
@@ -356,13 +389,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         currentTheme = snap.theme
         
         if currentTheme == "light" {
-            buttonBackground = UIColor.white
-            buttonTextColor = UIColor.black
-            textColor = UIColor.white
+            buttonBackground = UIColor(named: "White")!
+            buttonTextColor = UIColor(named: "Black")!
+            textColor = UIColor(named: "White")!
         } else {
-            buttonBackground = UIColor.black
-            buttonTextColor = UIColor.white
-            textColor = UIColor.black
+            buttonBackground = UIColor(named: "Black")!
+            buttonTextColor = UIColor(named: "White")!
+            textColor = UIColor(named: "Black")!
         }
         
         if let image = snap.image {
