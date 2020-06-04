@@ -236,6 +236,38 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         contextView.addSubview(newButton)
     }
     
+    func createTitleVoting(text: String,
+                           sizeText: Int,
+                           alignment: String,
+                           color: UIColor,
+                           heightTable: CGFloat) {
+        let labelText = UILabel()
+        labelText.text = text
+        labelText.font = UIFont(name: "Helvetica Bold", size: CGFloat(sizeText))!
+        labelText.textColor = color
+        labelText.lineBreakMode = .byWordWrapping
+        labelText.numberOfLines = 0
+        
+        switch alignment {
+        case "left":
+            labelText.textAlignment = .left
+        case "right":
+            labelText.textAlignment = .right
+        case "center":
+            labelText.textAlignment = .center
+        default:
+            break
+        }
+        
+        let sizeLabelText = labelText.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
+        
+        labelText.frame = CGRect(x: 24, y: (UIScreen.main.bounds.height - sizeLabelText.height - heightTable) / 2, width: UIScreen.main.bounds.width - 48, height: sizeLabelText.height)
+        
+        Const.currentHeight = (UIScreen.main.bounds.height - sizeLabelText.height - heightTable) / 2 + sizeLabelText.height
+        
+        contextView.addSubview(labelText)
+    }
+    
     @objc func buttonClick(_ sender: UIButton) {
         print("Button clicked")
     }
@@ -245,13 +277,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         tableViewController = TableViewController(style: .grouped, votingArray: votingArray, currentIndex: Const.currentIndex)
         let heightTable = CGFloat(tableViewController.tableView.numberOfSections) * 66.0
-        tableViewController.tableView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - (Const.currentHeight + heightTable), width: UIScreen.main.bounds.width, height: heightTable)
+        
+        createTitleVoting(text: title, sizeText: 40, alignment: "left", color: UIColor(named: "White")!, heightTable: heightTable)
+        
+        tableViewController.tableView.frame = CGRect(x: 0, y: Const.currentHeight, width: UIScreen.main.bounds.width, height: heightTable)
         
         contextView.addSubview(tableViewController.tableView)
-        
-        Const.currentHeight += heightTable + 24
-        
-        createLabelText(text: title, sizeText: 40, alignment: "center", color: UIColor(named: "White")!)
     }
     
     func getNewImage(image: UIImage) -> UIImage {
