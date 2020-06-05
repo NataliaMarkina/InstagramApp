@@ -258,7 +258,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         default:
             break
         }
-     
+        
         let sizeLabelText = labelText.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 48, height: CGFloat.greatestFiniteMagnitude))
         
         labelText.frame = CGRect(x: 24, y: (UIScreen.main.bounds.height - sizeLabelText.height - heightTable) / 2, width: UIScreen.main.bounds.width - 48, height: sizeLabelText.height)
